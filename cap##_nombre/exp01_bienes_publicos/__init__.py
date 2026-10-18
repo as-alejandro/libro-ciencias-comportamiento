@@ -5,7 +5,9 @@ doc = """
 Juego de bienes públicos con parámetros configurables desde settings.py:
 tamaño del grupo, dotación inicial, tasa de retorno per cápita (MPCR)
 y número de rondas. El multiplicador se calcula como MPCR × tamaño del grupo,
-de modo que la MPCR no cambia al cambiar el tamaño del grupo.
+de modo que la MPCR no cambia al cambiar el tamaño del grupo. \\
+
+Adaptación de Tutotial oTree: https://otree.readthedocs.io/en/latest/tutorial/part2.html
 """
 
 
