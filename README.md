@@ -30,4 +30,4 @@ Abre http://localhost:8000 en el navegador.
 
 ## Licencia
 
-[MIT / la que se acuerde con la entidad]
+[MIT]
