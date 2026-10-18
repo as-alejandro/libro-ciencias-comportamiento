@@ -1,0 +1,13 @@
+{{ block title }}Resultados de la ronda {{ player.round_number }}{{ endblock }}
+{{ block content }}
+
+<table class="table">
+    <tr><td>Tu dotación</td><td>{{ dotacion }}</td></tr>
+    <tr><td>Tu aporte al fondo común</td><td>{{ player.aporte }}</td></tr>
+    <tr><td>Total aportado por el grupo</td><td>{{ group.total_aportado }}</td></tr>
+    <tr><td>Tu parte del fondo común</td><td>{{ group.ganancia_individual }}</td></tr>
+    <tr><td><strong>Tu ganancia en esta ronda</strong></td><td><strong>{{ player.payoff }}</strong></td></tr>
+</table>
+
+{{ next_button }}
+{{ endblock }}

@@ -1,0 +1,10 @@
+{{ block title }}Ronda {{ player.round_number }} de {{ num_rondas }}{{ endblock }}
+{{ block content }}
+
+<p>Tienes <strong>{{ dotacion }}</strong>. Puedes aportar al fondo común cualquier cantidad
+entre 0 y {{ dotacion }}.</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}
