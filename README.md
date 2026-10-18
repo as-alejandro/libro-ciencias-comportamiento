@@ -12,7 +12,7 @@ al español de experimentos con programación previa.
 
 ### Estructura
 
-Cada capítulo tiene su propia carpeta dentro de `capitulos/`, y cada experimento su
+Cada capítulo tiene su propia carpeta, y cada experimento su
 subcarpeta con el código oTree y un README que describe el objetivo, el diseño y las
 instrucciones de ejecución.
 
@@ -20,13 +20,6 @@ instrucciones de ejecución.
 
 - Python 3.9 o superior
 - oTree 5 (`pip install otree`)
-
-### Ejecución local
-
-    pip install -r requirements.txt
-    otree devserver
-
-Abre http://localhost:8000 en el navegador.
 
 ### Licencia
 
