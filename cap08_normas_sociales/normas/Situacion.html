@@ -1,0 +1,18 @@
+{{ if participant.marco == 'ganada' }}
+<p>Otra persona, en una sesión como esta, ha realizado la misma tarea que tú acabas de
+hacer y ha obtenido {{ session.config.dotacion }} {{ session.config.etiqueta_moneda }}.
+Ahora tiene que decidir cómo repartirlas entre ella y una segunda persona, que no puede
+hacer nada al respecto.</p>
+{{ else }}
+<p>A otra persona, en una sesión como esta, se le han asignado
+{{ session.config.dotacion }} {{ session.config.etiqueta_moneda }} sin que tuviera que
+hacer nada. Ahora tiene que decidir cómo repartirlas entre ella y una segunda persona,
+que no puede hacer nada al respecto.</p>
+{{ endif }}
+
+<p>Puede elegir entre estas opciones:</p>
+<ul>
+{{ for opcion in opciones }}
+    <li>{{ opcion }}</li>
+{{ endfor }}
+</ul>

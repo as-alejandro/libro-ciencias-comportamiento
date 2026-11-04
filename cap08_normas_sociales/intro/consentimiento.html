@@ -1,0 +1,27 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Participación en una sesión de aula{{ endblock }}
+{{ block content }}
+
+<p>Vas a participar en una actividad de clase sobre toma de decisiones.
+No hay respuestas correctas ni incorrectas, y nada de lo que respondas
+afecta a tu calificación.</p>
+
+<p>La actividad dura unos 30 minutos. Tus respuestas se guardan con un código
+y no con tu nombre, y quien dirija la sesión no podrá saber quién respondió qué.</p>
+
+{{ if session.config.incentivos == 'monetario' }}
+<p>Al terminar se seleccionará al azar a 1 de cada {{ session.config.prob_pago }}
+participantes, y esa persona cobrará en dinero lo que haya ganado en una de las
+tareas, también elegida al azar.</p>
+{{ endif }}
+
+{{ if session.config.incentivos == 'puntos' }}
+<p>Al terminar verás cuántos puntos has ganado.</p>
+{{ endif }}
+
+<p>Puedes dejar la actividad en cualquier momento cerrando esta ventana.</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}

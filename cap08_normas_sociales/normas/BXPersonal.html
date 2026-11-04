@@ -1,0 +1,13 @@
+{{ extends "global/Page.html" }}
+{{ block title }}La situación{{ endblock }}
+{{ block content }}
+
+{{ include "normas/Situacion.html" }}
+
+<p>No te pedimos qué harías tú, ni qué crees que hará esa persona, sino qué consideras
+tú que debería hacer.</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}

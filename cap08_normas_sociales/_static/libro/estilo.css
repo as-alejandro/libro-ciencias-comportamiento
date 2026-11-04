@@ -1,0 +1,100 @@
+/* ==========================================================
+   Estilo común de los experimentos del libro
+   Paleta moderna ACCE · Lora + Open Sans + Source Code Pro
+
+   ARCHIVO MAESTRO: edita este archivo solo en estilo-comun/
+   y ejecuta .\sincronizar_estilo.ps1 desde la raíz.
+   Las copias dentro de cada capítulo se sobrescriben.
+   ========================================================== */
+
+/* ---------- Fuentes ---------- */
+@font-face { font-family: 'Lora'; font-weight: 500; font-style: normal; font-display: swap; src: url('fuentes/lora-500.woff2') format('woff2'); }
+@font-face { font-family: 'Lora'; font-weight: 600; font-style: normal; font-display: swap; src: url('fuentes/lora-600.woff2') format('woff2'); }
+@font-face { font-family: 'Open Sans'; font-weight: 400; font-style: normal; font-display: swap; src: url('fuentes/open-sans-400.woff2') format('woff2'); }
+@font-face { font-family: 'Open Sans'; font-weight: 400; font-style: italic; font-display: swap; src: url('fuentes/open-sans-400-italic.woff2') format('woff2'); }
+@font-face { font-family: 'Open Sans'; font-weight: 600; font-style: normal; font-display: swap; src: url('fuentes/open-sans-600.woff2') format('woff2'); }
+@font-face { font-family: 'Source Code Pro'; font-weight: 400; font-style: normal; font-display: swap; src: url('fuentes/source-code-pro-400.woff2') format('woff2'); }
+
+/* ---------- Paleta y tipografías ---------- */
+:root {
+    --acento: #C8102E;       /* rojo: identidad, solo detalles */
+    --texto: #111111;        /* negro: texto y títulos */
+    --secundario: #3D5A80;   /* azul pizarra: botones y datos */
+    --apagado: #5F6B7A;      /* gris azulado: etiquetas y notas */
+    --fondo: #EEF1F4;        /* gris frío: fondo de página */
+    --fondo-oscuro: #E1E6EC; /* gris un poco más oscuro: recuadros */
+    --borde: #D5DCE4;        /* líneas finas y bordes */
+    --blanco: #FFFFFF;
+    --fuente-titulos: 'Lora', Georgia, serif;
+    --fuente-texto: 'Open Sans', 'Segoe UI', Arial, sans-serif;
+    --fuente-codigo: 'Source Code Pro', Consolas, monospace;
+}
+
+/* ---------- Base ---------- */
+body {
+    background: var(--fondo);
+    color: var(--texto);
+    font-family: var(--fuente-texto);
+    font-size: 17px;
+    line-height: 1.65;
+    border-top: 5px solid var(--acento);
+}
+code, kbd, pre, .codigo { font-family: var(--fuente-codigo); }
+strong, b { font-weight: 600; }
+
+/* ---------- Tarjeta central ---------- */
+.otree-body {
+    max-width: 720px;
+    background: var(--blanco);
+    border: 1px solid var(--borde);
+    border-radius: 12px;
+    padding: 28px 36px 20px;
+    margin: 36px auto;
+}
+@media (max-width: 600px) {
+    body { font-size: 16px; }
+    .otree-body {
+        margin: 0;
+        border-radius: 0;
+        border-left: 0;
+        border-right: 0;
+        padding: 20px 18px;
+    }
+}
+
+/* ---------- Títulos ---------- */
+.otree-title {
+    font-family: var(--fuente-titulos);
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: var(--texto);
+    border: 0;
+    padding: 0 0 12px;
+    margin: 0 0 20px;
+    position: relative;
+}
+.otree-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 48px;
+    height: 3px;
+    background: var(--acento);
+}
+
+/* ---------- Botones ---------- */
+.btn-primary {
+    background: var(--secundario);
+    border-color: var(--secundario);
+    color: var(--blanco);
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 10px 26px;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background: var(--texto) !important;
+    border-color: var(--texto) !important;
+}

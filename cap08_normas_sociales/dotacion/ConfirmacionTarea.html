@@ -1,0 +1,16 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tarea completada{{ endblock }}
+{{ block content }}
+
+{{ if player.tarea_superada }}
+<p>Has completado la tarea. Las {{ session.config.dotacion }}
+{{ session.config.etiqueta_moneda }} que has ganado son las que aparecerán en la
+situación que viene a continuación.</p>
+{{ else }}
+<p>Has completado la tarea, así que has ganado igualmente las
+{{ session.config.dotacion }} {{ session.config.etiqueta_moneda }}. Son las que
+aparecerán en la situación que viene a continuación.</p>
+{{ endif }}
+
+{{ next_button }}
+{{ endblock }}

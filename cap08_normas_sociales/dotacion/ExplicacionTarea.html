@@ -1,0 +1,13 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tu tarea{{ endblock }}
+{{ block content }}
+
+<p>Antes de empezar, vas a realizar una tarea para obtener las
+{{ session.config.dotacion }} {{ session.config.etiqueta_moneda }} con las que
+trabajarás después.</p>
+
+<p>Tienes dos minutos para responder cinco preguntas. Cuando termines, las
+{{ session.config.dotacion }} {{ session.config.etiqueta_moneda }} serán tuyas.</p>
+
+{{ next_button }}
+{{ endblock }}

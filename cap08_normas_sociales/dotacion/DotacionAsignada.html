@@ -1,0 +1,9 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tu dotación{{ endblock }}
+{{ block content }}
+
+<p>Para esta actividad se te han asignado {{ session.config.dotacion }}
+{{ session.config.etiqueta_moneda }}. No tienes que hacer nada para obtenerlas.</p>
+
+{{ next_button }}
+{{ endblock }}

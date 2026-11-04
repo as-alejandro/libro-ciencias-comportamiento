@@ -1,0 +1,33 @@
+{{ extends "global/Page.html" }}
+{{ block title }}¿Qué crees que harán los demás?{{ endblock }}
+{{ block content }}
+
+{{ if participant.orden_bloques == 'norma_primero' }}
+<p>Dentro de un momento, todos los participantes de esta sesión, tú incluido, van a
+tomar la decisión real en la situación que acabas de evaluar.</p>
+
+<p>Vamos a tomar al azar a 10 de ellos. Reparte 10 fichas entre las opciones según
+cuántos de esos 10 crees que elegirán cada reparto. Las fichas tienen que sumar
+exactamente 10.</p>
+{{ else }}
+<p>Todos los participantes de esta sesión, tú incluido, acaban de tomar la decisión
+real en la situación que has evaluado.</p>
+
+<p>Vamos a tomar al azar a 10 de ellos. Reparte 10 fichas entre las opciones según
+cuántos de esos 10 crees que eligieron cada reparto. Las fichas tienen que sumar
+exactamente 10.</p>
+{{ endif }}
+
+<p>Fíjate en que ahora no te preguntamos qué está bien, sino qué va a pasar.</p>
+
+{{ if session.config.incentivos != 'hipotetico' }}
+<p>Si aciertas, con un margen de {{ session.config.tolerancia_prediccion }}, ganas
+{{ session.config.pago_ee }} {{ session.config.etiqueta_moneda }}.</p>
+{{ endif }}
+
+{{ for campo, texto in filas }}
+    {{ formfield campo label=texto }}
+{{ endfor }}
+
+{{ next_button }}
+{{ endblock }}

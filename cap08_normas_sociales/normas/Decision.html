@@ -1,0 +1,24 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Ahora decides tú{{ endblock }}
+{{ block content }}
+
+{{ if participant.marco == 'ganada' }}
+<p>Tienes las {{ session.config.dotacion }} {{ session.config.etiqueta_moneda }}
+que ganaste con la tarea.</p>
+{{ else }}
+<p>Tienes las {{ session.config.dotacion }} {{ session.config.etiqueta_moneda }}
+que se te asignaron.</p>
+{{ endif }}
+
+<p>Vas a repartirlas entre tú y otro participante de esta sesión, elegido al azar,
+que no puede hacer nada al respecto y que no sabrá quién eres.</p>
+
+{{ if session.config.incentivos == 'monetario' }}
+<p>Si resultas seleccionado para el pago y esta es la tarea sorteada, este reparto
+se hará efectivo.</p>
+{{ endif }}
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}
