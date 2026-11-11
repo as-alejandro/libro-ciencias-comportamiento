@@ -1,0 +1,46 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Instrucciones{{ endblock }}
+{{ block content }}
+
+<p>En esta actividad de clase vas a tomar decisiones en grupo.
+{{ if num_rondas == 1 }}
+La actividad dura <strong>una sola ronda</strong>.
+{{ else }}
+La actividad dura <strong>{{ num_rondas }} rondas</strong>.
+{{ endif }}
+</p>
+
+<p>En cada ronda formarás parte de un grupo de <strong>{{ tamano_grupo }} personas</strong>,
+elegidas al azar entre los participantes de esta sesión. Los grupos cambian en cada ronda.
+No sabrás quiénes son las demás personas de tu grupo, y ellas tampoco sabrán quién eres tú.</p>
+
+<p>Al comienzo de cada ronda, cada miembro del grupo recibe <strong>{{ dotacion }}</strong>.
+Tendrás que decidir cuánto de esa cantidad aportas a un <strong>fondo común</strong>.
+Lo que no aportes es para ti.</p>
+
+<p>Todo lo que el grupo aporte al fondo común se multiplica por <strong>{{ multiplicador }}</strong>
+y se reparte a partes iguales entre los {{ tamano_grupo }} miembros del grupo,
+sin importar cuánto haya aportado cada uno.</p>
+
+<p>Dicho de otra forma: por cada punto que cualquier miembro aporta al fondo común,
+<strong>cada</strong> miembro del grupo recibe <strong>{{ mpcr }} puntos</strong>.</p>
+
+<p>Tu ganancia en cada ronda será: <em>lo que te quedaste + tu parte del fondo común</em>.</p>
+
+{{ if limite_tiempo }}
+<p>Como los demás integrantes de tu grupo estarán esperando tu respuesta, en cada ronda
+tendrás <strong>{{ tiempo_decision }} segundos</strong> para tomar tu decisión. Si no decides
+a tiempo, se asumirá que aportas <strong>toda tu dotación</strong> al fondo común.</p>
+{{ endif }}
+
+{{ next_button }}
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // El botón "Siguiente" se activa a los 10 segundos.
+    const boton = document.querySelector('.otree-btn-next');
+    boton.disabled = true;
+    setTimeout(function () { boton.disabled = false; }, 10000);
+</script>
+{{ endblock }}

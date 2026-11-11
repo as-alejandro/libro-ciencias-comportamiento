@@ -4,12 +4,15 @@ SESSION_CONFIGS = [
     dict(
         name='bienes_publicos',
         display_name='Bienes públicos',
-        app_sequence=['exp01_bienes_publicos'],
+        app_sequence=['intro', 'bienes_publicos'],
         num_demo_participants=4,
         tamano_grupo=4,
         dotacion=20,
         mpcr=0.5,
         num_rondas=10,
+        limite_tiempo=True,
+        tiempo_decision=60,
+        segundos_alerta=30,
     ),
 ]
 
@@ -22,7 +25,7 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc=""
 )
 
-PARTICIPANT_FIELDS = []
+PARTICIPANT_FIELDS = ['consentimiento', 'en_juego']
 SESSION_FIELDS = []
 
 # ISO-639 code

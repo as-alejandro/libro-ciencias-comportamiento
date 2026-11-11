@@ -1,0 +1,13 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Fin de la actividad{{ endblock }}
+{{ block content }}
+
+{{ if participant.consentimiento }}
+<p>La actividad ha terminado. Gracias por participar.</p>
+{{ else }}
+<p>Has decidido no participar en la actividad. No se guardará ninguna otra respuesta.</p>
+{{ endif }}
+
+<p>Ya puedes cerrar esta ventana.</p>
+
+{{ endblock }}

@@ -1,0 +1,45 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Ronda {{ player.round_number }} de {{ num_rondas }}{{ endblock }}
+
+{{ block styles }}
+<style>
+    /* Presión de tiempo: a partir de segundos_alerta, la pantalla titila en rojo.
+       Un ciclo por segundo, por debajo del límite de 3 destellos por segundo
+       que recomiendan las pautas de accesibilidad. */
+    @keyframes titileo {
+        0%, 100% { background-color: var(--fondo); }
+        50%      { background-color: #F6C6CD; }
+    }
+    @keyframes borde {
+        0%, 100% { box-shadow: 0 0 0 0 rgba(215, 38, 61, 0); }
+        50%      { box-shadow: 0 0 0 5px rgba(215, 38, 61, 0.8); }
+    }
+    body.presion { animation: titileo 1s ease-in-out infinite; }
+    body.presion .otree-body { animation: borde 1s ease-in-out infinite; }
+</style>
+{{ endblock }}
+
+{{ block content }}
+
+<p>Tienes <strong>{{ dotacion }}</strong>. Puedes aportar al fondo común cualquier cantidad
+entre 0 y {{ dotacion }}. Lo que no aportes es para ti.</p>
+
+{{ if limite_tiempo }}
+<p>Si no decides a tiempo, se asumirá que aportas toda tu dotación.</p>
+{{ endif }}
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}
+
+{{ block scripts }}
+{{ if limite_tiempo }}
+<script>
+    // A partir de segundos_alerta, se activa el titileo en rojo.
+    setTimeout(function () {
+        document.body.classList.add('presion');
+    }, {{ ms_hasta_alerta }});
+</script>
+{{ endif }}
+{{ endblock }}
