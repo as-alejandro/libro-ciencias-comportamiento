@@ -1,0 +1,38 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Reparte {{ session.config.dotacion_dictador }} {{ session.config.etiqueta_moneda }}{{ endblock }}
+{{ block content }}
+
+<p>Tienes {{ session.config.dotacion_dictador }} {{ session.config.etiqueta_moneda }} para
+repartir entre tú y otro participante de esta sesión, que pertenece
+{{ if es_propio }}a <b>tu mismo grupo</b>{{ else }}<b>al grupo contrario</b>{{ endif }}.
+Esa persona no puede hacer nada al respecto: solo recibe lo que tú decidas darle.
+¿Cuánto quieres quedarte y cuánto quieres darle?</p>
+
+{{ formfields }}
+
+<p id="reparto" class="reparto"></p>
+
+{{ next_button }}
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // Muestra, mientras se escribe, cuánto se queda la persona.
+    const dotacion = {{ session.config.dotacion_dictador }};
+    const etiqueta = '{{ session.config.etiqueta_moneda }}';
+    const casilla = document.querySelector('input[type=number]');
+    const reparto = document.getElementById('reparto');
+
+    function actualizar() {
+        const da = parseInt(casilla.value);
+        if (isNaN(da) || da < 0 || da > dotacion) {
+            reparto.textContent = '';
+            return;
+        }
+        reparto.textContent = 'Te quedas con ' + (dotacion - da) + ' ' + etiqueta +
+                              ' y le das ' + da + ' ' + etiqueta + '.';
+    }
+    casilla.addEventListener('input', actualizar);
+    actualizar();
+</script>
+{{ endblock }}

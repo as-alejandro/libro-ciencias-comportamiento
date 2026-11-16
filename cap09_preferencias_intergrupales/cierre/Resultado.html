@@ -1,0 +1,39 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Resultado{{ endblock }}
+{{ block content }}
+
+{{ if sin_tarea }}
+<p>No fue posible calcular una ganancia con tus respuestas.</p>
+
+{{ elif incentivos == 'dinero_real' }}
+    {{ if player.seleccionado_pago }}
+    <p>La decisión sorteada para tu pago fue <b>{{ nombre_tarea }}</b>, y ganaste
+    <b>{{ player.ganancia_fichas }} {{ session.config.etiqueta_moneda }}</b>, equivalentes a
+    <b>{{ ganancia_local }} {{ session.config.moneda_local }}</b>.</p>
+    {{ else }}
+    <p>En esta ocasión no has sido seleccionado o seleccionada para el pago. La decisión
+    sorteada fue <b>{{ nombre_tarea }}</b>, y habrías ganado {{ player.ganancia_fichas }}
+    {{ session.config.etiqueta_moneda }}.</p>
+    {{ endif }}
+
+{{ elif incentivos == 'puntos' }}
+<p>La decisión sorteada fue <b>{{ nombre_tarea }}</b>, y ganaste
+<b>{{ player.ganancia_fichas }} {{ session.config.etiqueta_moneda }}</b>.</p>
+
+{{ else }}
+<p>Gracias por participar; esta actividad no incluyó pago.</p>
+{{ endif }}
+
+{{ if session.config.revelar_criterio_induccion }}
+<p><b>Cómo se formaron los grupos.</b>
+{{ if metodo == 'pinturas' }}Tu grupo se asignó según el conjunto de imágenes que preferiste.
+{{ elif metodo == 'colores' }}Tu grupo se asignó según el color que preferiste.
+{{ else }}Tu grupo se asignó mediante un sorteo.{{ endif }}
+Los grupos no tenían ningún otro significado.</p>
+{{ endif }}
+
+<p>Tu profesora o profesor comentará en clase los resultados del grupo.</p>
+
+<p>Ya puedes cerrar esta ventana.</p>
+
+{{ endblock }}

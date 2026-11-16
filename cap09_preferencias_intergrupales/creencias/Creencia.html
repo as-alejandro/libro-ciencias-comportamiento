@@ -1,0 +1,23 @@
+{{ extends "global/Page.html" }}
+{{ block title }}¿Qué crees que hará {{ if es_propio }}tu propio grupo{{ else }}el grupo contrario{{ endif }}?{{ endblock }}
+{{ block content }}
+
+<p>Imagina que, en el juego anterior, alguien le envía
+{{ session.config.nivel_referencia_creencias }} {{ session.config.etiqueta_moneda }}
+—ya multiplicadas por {{ session.config.multiplicador_confianza }}— a un participante de
+{{ if es_propio }}<b>tu propio grupo</b>{{ else }}<b>el grupo contrario</b>{{ endif }}
+en el rol de receptor. Es decir, esa persona recibe {{ recibido }}
+{{ session.config.etiqueta_moneda }}. ¿Cuánto crees que esa persona devolvería, en promedio?</p>
+
+{{ if session.config.incentivos != 'hipotetico' }}
+<p>Si tu predicción queda a {{ session.config.tolerancia_creencias }}
+{{ session.config.etiqueta_moneda }} o menos de la devolución promedio real de ese grupo
+en esta sesión, ganas {{ session.config.pago_creencias }} {{ session.config.etiqueta_moneda }}.</p>
+{{ endif }}
+
+<p>Puedes responder desde 0 hasta {{ recibido }}.</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}

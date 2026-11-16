@@ -1,0 +1,15 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Comprueba que lo has entendido{{ endblock }}
+{{ block content }}
+
+<p>En las dos pantallas siguientes vas a predecir qué hicieron los demás participantes
+cuando respondieron como quien recibe.</p>
+
+<p>Cuando te digamos que «alguien envía {{ session.config.nivel_referencia_creencias }}
+{{ session.config.etiqueta_moneda }}», ¿cuántas {{ session.config.etiqueta_moneda }} recibe
+la otra persona?</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}

@@ -1,0 +1,30 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Cómo funciona{{ endblock }}
+{{ block content }}
+
+<p>En esta actividad vas a tomar varias decisiones económicas junto con otros
+participantes de esta sesión.</p>
+
+<p>Al empezar, un criterio sencillo te asignará a un grupo, A o B. Más adelante
+tomarás decisiones que reparten {{ session.config.etiqueta_moneda }} entre tú y
+participantes anónimos, a veces de tu propio grupo y a veces del otro.</p>
+
+{{ if session.config.incentivos != 'hipotetico' }}
+<p>Algunas de tus respuestas pueden hacerte ganar {{ session.config.etiqueta_moneda }}.
+En cada caso te explicaremos cómo antes de que respondas.</p>
+{{ endif }}
+
+<p>No vas a ver en ningún momento lo que han respondido los demás hasta que la
+actividad termine.</p>
+
+{{ next_button }}
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // El botón "Siguiente" se activa a los 10 segundos (apartado 5).
+    const boton = document.querySelector('.otree-btn-next');
+    boton.disabled = true;
+    setTimeout(function () { boton.disabled = false; }, 10000);
+</script>
+{{ endblock }}

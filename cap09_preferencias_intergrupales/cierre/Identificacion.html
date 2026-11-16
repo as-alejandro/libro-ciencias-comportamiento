@@ -1,0 +1,12 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tu grupo y tú{{ endblock }}
+{{ block content }}
+
+<p>En una escala de 1 a {{ session.config.categorias_likert_identificacion }}, donde 1 es
+«nada» y {{ session.config.categorias_likert_identificacion }} es «mucho», ¿qué tanto
+sientes que perteneces al grupo que te fue asignado?</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}

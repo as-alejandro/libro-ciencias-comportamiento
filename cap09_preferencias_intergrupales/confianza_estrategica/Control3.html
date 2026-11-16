@@ -1,0 +1,19 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Enviar y devolver{{ endblock }}
+{{ block content }}
+
+<p>En esta parte, una persona puede enviarle a otra parte de sus
+{{ session.config.dotacion_confianza }} {{ session.config.etiqueta_moneda }}. Lo que envíe
+se multiplica por {{ session.config.multiplicador_confianza }} antes de llegar a la otra
+persona, que decide cuánto le devuelve.</p>
+
+<p>Por ejemplo, si alguien envía {{ session.config.dotacion_confianza }}, la otra persona
+recibe {{ maximo_recibido }} y puede devolverle desde 0 hasta {{ maximo_recibido }}.</p>
+
+<p>Vas a responder como quien envía y como quien recibe. En lugar de esperar a que
+otra persona decida, te pediremos tu respuesta para cada caso posible.</p>
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}
