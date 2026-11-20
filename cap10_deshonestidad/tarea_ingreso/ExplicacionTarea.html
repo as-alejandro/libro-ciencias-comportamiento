@@ -1,0 +1,48 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Obtención de tu ingreso{{ endblock }}
+{{ block content }}
+
+<p>Al comienzo del experimento realizarás una breve tarea de esfuerzo.</p>
+
+<p>En cada ejercicio aparecerá una matriz de 6 columnas × 4 filas, formada por diferentes
+figuras. Se te indicará una figura objetivo y tu tarea consistirá en contar cuántas veces
+aparece esa figura en la matriz.</p>
+
+<p>Por ejemplo: ¿cuántas veces aparece ◧?</p>
+
+<table class="matriz">
+    <tr><td>⬢</td><td>◧</td><td>✚</td><td>✦</td><td>◧</td><td>⬟</td></tr>
+    <tr><td>✚</td><td>◪</td><td>◧</td><td>✦</td><td>⬢</td><td>◧</td></tr>
+    <tr><td>⬟</td><td>✚</td><td>◪</td><td>◧</td><td>✦</td><td>⬢</td></tr>
+    <tr><td>◧</td><td>✦</td><td>⬟</td><td>✚</td><td>◪</td><td>◧</td></tr>
+</table>
+
+<p>La respuesta correcta es <b>7</b>.</p>
+
+<p>En cada ejercicio deberás introducir tu respuesta antes de continuar con el siguiente.
+Dispondrás de <b>{{ session.config.segundos_tarea }} segundos</b> para resolver tantos
+ejercicios como puedas.</p>
+
+<p>Por cada ejercicio correctamente resuelto recibirás
+<b>{{ session.config.puntos_por_acierto }} {{ session.config.etiqueta_moneda }}</b>.
+No recibirás {{ session.config.etiqueta_moneda }} por respuestas incorrectas.</p>
+
+<p>Tu ingreso al final de la tarea será: número de ejercicios correctos ×
+{{ session.config.puntos_por_acierto }}. Por ejemplo, si resuelves correctamente
+10 ejercicios, tu ingreso será 10 × {{ session.config.puntos_por_acierto }} =
+{{ ejemplo_ingreso }} {{ session.config.etiqueta_moneda }}.</p>
+
+<p>Los demás miembros de tu grupo realizarán exactamente la misma tarea, durante el mismo
+tiempo y con la misma remuneración por respuesta correcta. Por tanto, los ingresos de los
+miembros del grupo pueden ser diferentes, dependiendo de su desempeño en la tarea.</p>
+
+<p>Cuando oprimas «Siguiente», empezará a correr el tiempo.</p>
+
+{{ next_button }}
+
+<style>
+    .matriz { border-collapse: collapse; margin: 0 auto 1rem auto; }
+    .matriz td { width: 2.6rem; height: 2.6rem; text-align: center; font-size: 1.6rem;
+                 border: 1px solid #ccc; }
+</style>
+{{ endblock }}

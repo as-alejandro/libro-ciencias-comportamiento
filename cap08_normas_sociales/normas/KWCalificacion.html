@@ -1,0 +1,23 @@
+{{ extends "global/Page.html" }}
+{{ block title }}La situación{{ endblock }}
+{{ block content }}
+
+{{ include "normas/Situacion.html" }}
+
+<p>Para cada uno de los repartos posibles, indica si te parece {{ escala_texto }}.</p>
+
+<p>Por apropiado entendemos aquello que la mayoría de la gente consideraría la conducta
+correcta o aceptable en esta situación, y no lo que tú harías.</p>
+
+{{ if session.config.incentivos != 'hipotetico' }}
+<p>Al terminar la sesión elegiremos al azar uno de los repartos. Si tu calificación de
+ese reparto coincide con la que más se repitió entre los demás participantes, ganas
+{{ session.config.pago_kw }} {{ session.config.etiqueta_moneda }}.</p>
+{{ endif }}
+
+{{ for campo, texto in filas }}
+    {{ formfield campo label=texto }}
+{{ endfor }}
+
+{{ next_button }}
+{{ endblock }}

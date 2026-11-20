@@ -1,0 +1,40 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Auditoría y multa{{ endblock }}
+{{ block content }}
+
+<div class="recuadro">
+    <p class="subtitulo">Auditoría</p>
+    <p>Después de que hayas realizado tu declaración, existe una probabilidad del
+    <span class="cifra">{{ session.config.prob_auditoria }} %</span> de que tu declaración sea
+    auditada.</p>
+    <p>La auditoría se determina aleatoriamente. Tu probabilidad de ser auditado no depende de
+    cuánto hayas declarado ni de tus decisiones en rondas anteriores.</p>
+</div>
+
+<div class="recuadro">
+    <p class="subtitulo">¿Qué ocurre si eres auditado?</p>
+    <p>Si eres auditado, el sistema comparará tu ingreso real con el ingreso que declaraste.
+    Si declaraste todo tu ingreso, no deberás realizar ningún pago adicional.</p>
+
+    <p>Si declaraste menos que tu ingreso real, deberás pagar el impuesto que corresponde a la
+    parte no declarada y, además, una multa igual al
+    <span class="cifra">{{ session.config.multa }} %</span> del valor no declarado.</p>
+
+    <p>Por ejemplo, si tu ingreso fue de 100 y declaraste 60, los 40 no declarados pagan su
+    impuesto ({{ impuesto_oculto_ejemplo }}) y una multa de
+    40 × {{ session.config.multa }} % = <b>{{ multa_ejemplo }}</b>.</p>
+
+    <p>Este pago adicional funciona como una sanción por el ingreso no declarado. Lo recaudado
+    en la auditoría no se incorpora al fondo público y no genera ningún retorno para tu grupo.
+    Solo la parte de los impuestos pagados normalmente que esté destinada al fondo público
+    contribuirá al bien público del grupo.</p>
+</div>
+
+{{ next_button }}
+
+{{ include "declaracion/estilo_instrucciones.html" }}
+{{ endblock }}
+
+{{ block scripts }}
+{{ include "declaracion/boton_diez_segundos.html" }}
+{{ endblock }}

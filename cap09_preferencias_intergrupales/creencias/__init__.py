@@ -24,7 +24,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    control4 = models.IntegerField(widget=widgets.RadioSelect)
+    control4 = models.IntegerField(widget=widgets.RadioSelect, label='')
     control4_intentos = models.IntegerField(initial=0)
     creencias_propio = models.IntegerField(
         label='¿Cuánto crees que devolvería, en promedio?', min=0,

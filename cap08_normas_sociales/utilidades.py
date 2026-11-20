@@ -44,3 +44,22 @@ def leer_repartos(config):
                 f'no suma {dotacion}, que es la dotación.'
             )
     return pares
+
+
+# Etiquetas de la escala de adecuación de Krupka y Weber, según el número de categorías.
+# Las de 4 son las de la autora; las de 5 y 6 son una propuesta pendiente de aprobación.
+ESCALAS_KW = {
+    4: ['Muy inapropiado', 'Algo inapropiado', 'Algo apropiado', 'Muy apropiado'],
+    5: ['Muy inapropiado', 'Algo inapropiado', 'Ni apropiado ni inapropiado',
+        'Algo apropiado', 'Muy apropiado'],
+    6: ['Muy inapropiado', 'Bastante inapropiado', 'Algo inapropiado',
+        'Algo apropiado', 'Bastante apropiado', 'Muy apropiado'],
+}
+
+
+def valor_kw(categoria, num_categorias):
+    """
+    Convierte una categoría (1, 2, ...) en su valor numérico en [-1, 1],
+    repartido de forma equiespaciada. Con 4 categorías: -1, -1/3, 1/3, 1.
+    """
+    return round(-1 + 2 * (categoria - 1) / (num_categorias - 1), 4)

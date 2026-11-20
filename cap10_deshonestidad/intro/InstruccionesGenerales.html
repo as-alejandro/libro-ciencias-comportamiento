@@ -1,0 +1,58 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Instrucciones generales{{ endblock }}
+{{ block content }}
+
+<p class="entrada">Bienvenido/a al experimento. Durante este experimento tomarás una serie
+de decisiones relacionadas con la <b>declaración de ingresos</b> y el <b>pago de
+impuestos</b>. Tus decisiones afectarán tanto a tu propio pago como al pago de otros
+participantes de tu grupo.</p>
+
+<p>Por favor, lee atentamente las instrucciones. Antes de comenzar deberás responder
+correctamente algunas preguntas de comprensión.</p>
+
+<p>Todas las decisiones se tomarán de forma <b>anónima</b>. Los demás participantes no
+conocerán tu identidad y tú tampoco conocerás la identidad de las personas que forman parte
+de tu grupo.</p>
+
+<p>Durante el experimento utilizaremos {{ session.config.etiqueta_moneda }} experimentales.</p>
+
+<div class="recuadro">
+    <p class="subtitulo">Composición del grupo</p>
+
+    <p>Durante todo el experimento formarás parte de un <b>grupo de
+    {{ session.config.tamano_grupo }} participantes</b>. La composición de tu grupo
+    <b>permanecerá fija</b> durante todas las rondas. Esto significa que interactuarás
+    siempre con los mismos {{ otros }} participantes, aunque sus identidades permanecerán
+    anónimas.</p>
+
+    <p>Cada miembro del grupo tomará sus decisiones de manera independiente.</p>
+</div>
+
+{{ next_button }}
+
+<style>
+    .entrada { font-size: 1.08rem; }
+    .recuadro {
+        background: var(--fondo, #EEF1F4);
+        border-left: 4px solid var(--acento, #C8102E);
+        border-radius: 6px;
+        padding: 1rem 1.25rem .25rem 1.25rem;
+        margin: 1.5rem 0;
+    }
+    .subtitulo {
+        font-family: 'Lora', Georgia, serif;
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: .5rem;
+    }
+</style>
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // El botón "Siguiente" se activa a los 10 segundos, como en los otros capítulos.
+    const boton = document.querySelector('.otree-btn-next');
+    boton.disabled = true;
+    setTimeout(function () { boton.disabled = false; }, 10000);
+</script>
+{{ endblock }}

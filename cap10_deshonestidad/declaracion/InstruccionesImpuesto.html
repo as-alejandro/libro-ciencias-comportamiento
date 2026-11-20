@@ -1,0 +1,64 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tu declaración y el impuesto{{ endblock }}
+{{ block content }}
+
+<div class="recuadro">
+    <p class="subtitulo">Declaración de ingresos</p>
+    <p>Después de conocer tu ingreso deberás decidir cuánto deseas declarar. Puedes declarar
+    cualquier cantidad entre <b>0 y el total de {{ session.config.etiqueta_moneda }} que hayas
+    obtenido</b>. La cantidad declarada será la base para calcular los impuestos que debes
+    pagar.</p>
+    <p>Por ejemplo, si has obtenido 100 {{ session.config.etiqueta_moneda }}, podrás declarar
+    cualquier cantidad entre 0 y 100 {{ session.config.etiqueta_moneda }}.</p>
+</div>
+
+<div class="recuadro">
+    <p class="subtitulo">Tasa impositiva</p>
+
+    <p>La tasa impositiva es del <span class="cifra">{{ imp.total }} %</span>. Esto significa
+    que por cada 100 {{ session.config.etiqueta_moneda }} que declares pagarás {{ imp.total }}
+    {{ session.config.etiqueta_moneda }} de impuestos.</p>
+
+    <p>De cada {{ imp.total }} {{ session.config.etiqueta_moneda }} que pagues:</p>
+    <ul>
+        <li>{{ imp.fondo }} se destinan al <b>fondo público de tu grupo</b>.</li>
+        <li>{{ imp.admin }} se destinan a cubrir <b>gastos administrativos</b>.</li>
+        {{ if imp.destino == 'sin_explicacion' }}
+        <li>{{ imp.extra }} se destinan a <b>otros gastos</b>.</li>
+        {{ elif imp.destino == 'inversion' }}
+        <li>{{ imp.extra }} se destinan a <b>inversiones de largo plazo en infraestructura que
+        beneficiarán a otras personas en el futuro</b>.</li>
+        {{ elif imp.destino == 'salarios' }}
+        <li>{{ imp.extra }} se destinan a pagar <b>mayores salarios a servidores públicos</b>.</li>
+        {{ endif }}
+    </ul>
+
+    {{ if imp.destino == 'inversion' }}
+    <p>Estas inversiones no modifican el pago que tú ni los demás miembros de tu grupo reciben
+    durante esta sesión.</p>
+    {{ elif imp.destino == 'salarios' }}
+    <p>Estos gastos adicionales no modifican el fondo público ni los pagos que reciben los
+    participantes durante esta sesión.</p>
+    {{ endif }}
+
+    <p>Por ejemplo:</p>
+    <ul>
+        <li>Si recibes 100 y declaras 100, pagas {{ ej100.total }} de impuestos:
+            {{ ej100.fondo }} al fondo público, {{ ej100.admin }} a gastos administrativos{{ if imp.extra }}
+            y {{ ej100.extra }} a {{ if imp.destino == 'sin_explicacion' }}otros gastos{{ elif imp.destino == 'inversion' }}inversiones de largo plazo{{ else }}salarios de servidores públicos{{ endif }}{{ endif }}.</li>
+        <li>Si recibes 100 y declaras 60, pagas {{ ej60.total }} de impuestos:
+            {{ ej60.fondo }} al fondo público, {{ ej60.admin }} a gastos administrativos{{ if imp.extra }}
+            y {{ ej60.extra }} a {{ if imp.destino == 'sin_explicacion' }}otros gastos{{ elif imp.destino == 'inversion' }}inversiones de largo plazo{{ else }}salarios de servidores públicos{{ endif }}{{ endif }}.</li>
+    </ul>
+
+    <p class="formula">Impuesto total = ingreso declarado × {{ imp.total }} %</p>
+</div>
+
+{{ next_button }}
+
+{{ include "declaracion/estilo_instrucciones.html" }}
+{{ endblock }}
+
+{{ block scripts }}
+{{ include "declaracion/boton_diez_segundos.html" }}
+{{ endblock }}

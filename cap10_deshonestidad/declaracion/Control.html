@@ -1,0 +1,24 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Comprueba que lo has entendido{{ endblock }}
+{{ block content }}
+
+<p>Antes de empezar las rondas, responde estas preguntas.</p>
+
+<p class="pregunta"><b>1.</b> Si tu ingreso es de 100 y declaras 60, ¿cuánto pagas de impuestos?</p>
+{{ formfield 'control_p1' label='' }}
+
+<p class="pregunta"><b>2.</b> ¿Qué pasa con lo que se paga en una auditoría?</p>
+{{ formfield 'control_p2' label='' }}
+
+<p class="pregunta"><b>3.</b> Si entre los {{ tamano }} miembros de tu grupo destinan 80 al
+fondo público, ¿cuánto recibe cada uno del fondo?</p>
+{{ formfield 'control_p3' label='' }}
+
+{{ next_button }}
+
+<style>
+    /* Oculta el espacio de la etiqueta vacía: la pregunta ya está escrita arriba */
+    label:empty { display: none; }
+    .pregunta { margin-bottom: .3rem; margin-top: 1rem; }
+</style>
+{{ endblock }}

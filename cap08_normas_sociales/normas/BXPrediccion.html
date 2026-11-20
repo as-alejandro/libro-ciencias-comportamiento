@@ -1,0 +1,21 @@
+{{ extends "global/Page.html" }}
+{{ block title }}¿Qué habrán respondido los demás?{{ endblock }}
+{{ block content }}
+
+<p>Vamos a tomar al azar a 10 participantes de esta misma sesión y mirar qué
+respondieron a la pregunta anterior.</p>
+
+<p>Reparte 10 fichas entre las opciones según cuántos de esos 10 crees que eligieron
+cada una. Las fichas tienen que sumar exactamente 10.</p>
+
+{{ if session.config.incentivos != 'hipotetico' }}
+<p>Si tu reparto acierta cuál fue la opción más elegida, ganas
+{{ session.config.pago_bx }} {{ session.config.etiqueta_moneda }}.</p>
+{{ endif }}
+
+{{ for campo, texto in filas }}
+    {{ formfield campo label=texto }}
+{{ endfor }}
+
+{{ next_button }}
+{{ endblock }}

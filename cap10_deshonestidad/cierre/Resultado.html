@@ -1,0 +1,25 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Resultado{{ endblock }}
+{{ block content }}
+
+{{ if incentivos != 'hipotetico' }}
+<p>Se sorteó la <b>ronda {{ player.ronda_pagada }}</b>. En esa ronda obtuviste
+<b>{{ pago }} {{ session.config.etiqueta_moneda }}</b>.
+{{ if negativo }}Como el resultado no puede ser negativo, se cuenta como 0.{{ endif }}</p>
+
+    {{ if incentivos == 'monetario' }}
+        {{ if player.seleccionado_pago }}
+        <p>Has sido seleccionado o seleccionada para el pago: recibirás
+        <b>{{ ganancia_local }} {{ session.config.moneda_local }}</b>.</p>
+        {{ else }}
+        <p>En esta ocasión no has sido seleccionado o seleccionada para el pago.</p>
+        {{ endif }}
+    {{ endif }}
+{{ endif }}
+
+<p>Gracias por participar. Tu profesora o profesor comentará en clase los resultados
+del grupo.</p>
+
+<p>Ya puedes cerrar esta ventana.</p>
+
+{{ endblock }}

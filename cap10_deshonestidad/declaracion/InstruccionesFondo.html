@@ -1,0 +1,55 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Fondo público y pago{{ endblock }}
+{{ block content }}
+
+<div class="recuadro">
+    <p class="subtitulo">Fondo público</p>
+    <p>Los impuestos destinados al fondo por los {{ session.config.tamano_grupo }} miembros del
+    grupo se suman en un fondo público. El valor del fondo se multiplica por
+    <span class="cifra">{{ session.config.multiplicador }}</span> y el total se reparte en partes
+    iguales entre los {{ session.config.tamano_grupo }} miembros del grupo.</p>
+
+    <p>Por ejemplo, si los miembros del grupo destinan conjuntamente 80 al fondo público, el
+    fondo genera 80 × {{ session.config.multiplicador }} = {{ fondo_ejemplo }}, y cada miembro
+    recibe {{ fondo_ejemplo }} ÷ {{ session.config.tamano_grupo }} = <b>{{ reparto_ejemplo }}</b>.</p>
+
+    <p>Todos los miembros reciben la misma cantidad, independientemente de cuánto haya declarado
+    cada persona.</p>
+</div>
+
+<div class="recuadro">
+    <p class="subtitulo">Información sobre las decisiones de los demás</p>
+    {{ if session.config.info_social }}
+    <p>A partir de la segunda ronda, antes de tomar tu decisión, recibirás información sobre
+    las decisiones de los otros miembros de tu grupo en la ronda anterior. Verás, por ejemplo:
+    «En la ronda anterior, los otros {{ otros }} miembros de tu grupo declararon en promedio
+    el X % de su ingreso». La información se refiere únicamente a los participantes de tu grupo y no
+    revela la identidad de ninguna persona.</p>
+    {{ else }}
+    <p>No recibirás información sobre cuánto declararon individualmente los otros miembros de tu
+    grupo. Al final de cada ronda conocerás únicamente la información necesaria para calcular tu
+    pago y el tamaño total del fondo público.</p>
+    {{ endif }}
+</div>
+
+<div class="recuadro">
+    <p class="subtitulo">Tu pago en cada ronda</p>
+    <p class="formula">Pago = ingreso − impuestos pagados − pagos por auditoría + pago del fondo público</p>
+    <p>Recuerda que:</p>
+    <ul>
+        <li>los gastos administrativos no regresan al grupo;</li>
+        <li>lo que se paga en una auditoría no regresa al grupo;</li>
+        {{ if imp.extra }}
+        <li>los recursos adicionales del impuesto tampoco aumentan el pago del grupo.</li>
+        {{ endif }}
+    </ul>
+</div>
+
+{{ next_button }}
+
+{{ include "declaracion/estilo_instrucciones.html" }}
+{{ endblock }}
+
+{{ block scripts }}
+{{ include "declaracion/boton_diez_segundos.html" }}
+{{ endblock }}

@@ -1,0 +1,46 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Ronda {{ player.round_number }} de {{ session.config.num_rondas }}{{ endblock }}
+{{ block content }}
+
+{{ if mostrar_info }}
+<div class="aviso">
+    {{ if hay_promedio }}
+    En la ronda anterior, los otros {{ otros }} miembros de tu grupo declararon en promedio
+    <b>el {{ promedio }} % de su ingreso</b>.
+    {{ else }}
+    En la ronda anterior no hubo declaraciones de los otros miembros de tu grupo que se
+    pudieran promediar.
+    {{ endif }}
+</div>
+{{ endif }}
+
+<table class="tabla-datos">
+    <tr><td>Tu ingreso</td><td><b>{{ player.ingreso }} {{ session.config.etiqueta_moneda }}</b></td></tr>
+    <tr><td>Tasa impositiva</td><td>{{ imp.total }} %</td></tr>
+    <tr><td>Probabilidad de auditoría</td><td>{{ session.config.prob_auditoria }} %</td></tr>
+    <tr><td>Si te auditan y declaraste menos</td>
+        <td>impuesto de lo no declarado + multa del {{ session.config.multa }} % de lo no declarado</td></tr>
+    <tr><td>Multiplicador del fondo público</td><td>{{ session.config.multiplicador }}</td></tr>
+</table>
+
+<p>¿Cuánto de tus {{ player.ingreso }} {{ session.config.etiqueta_moneda }} deseas declarar?
+Puedes declarar cualquier cantidad entre 0 y {{ player.ingreso }}.</p>
+
+{{ formfield 'declarado' label='' }}
+
+{{ next_button }}
+
+<style>
+    .tabla-datos { width: 100%; border-collapse: collapse; margin-bottom: 1.25rem; }
+    .tabla-datos td { padding: .45rem .6rem; border-bottom: 1px solid #ddd; vertical-align: top; }
+    .tabla-datos td:first-child { color: var(--secundario, #3D5A80); width: 45%; }
+    .aviso {
+        background: var(--fondo, #EEF1F4);
+        border-left: 4px solid var(--acento, #C8102E);
+        border-radius: 6px;
+        padding: .8rem 1.1rem;
+        margin-bottom: 1.25rem;
+    }
+    label:empty { display: none; }
+</style>
+{{ endblock }}

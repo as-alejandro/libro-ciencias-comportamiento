@@ -49,6 +49,8 @@ def creating_session(subsession: Subsession):
     config = subsession.session.config
     comprobar_parametros(config)
     leer_repartos(config)
+    if config['categorias_kw'] not in [4, 5, 6]:
+        raise ValueError('El parámetro "categorias_kw" debe ser 4, 5 o 6.')
     semilla = config['semilla']
     azar = random.Random(semilla) if semilla else random.Random()
 
@@ -65,19 +67,20 @@ def creating_session(subsession: Subsession):
 
     # Bloques equilibrados: se reparte una combinación de cada tipo, en orden
     # aleatorio, y se repite hasta cubrir a todos los participantes.
-    participantes = subsession.session.get_participants()
+    jugadores = subsession.get_players()
     asignaciones = []
-    while len(asignaciones) < len(participantes):
+    while len(asignaciones) < len(jugadores):
         bloque = combinaciones.copy()
         azar.shuffle(bloque)
         asignaciones.extend(bloque)
 
-    for participante, combinacion in zip(participantes, asignaciones):
+    for jugador, combinacion in zip(jugadores, asignaciones):
         marco, metodo, orden_metodo, orden_bloques = combinacion
-        participante.marco = marco
-        participante.metodo = metodo
-        participante.orden_metodo = orden_metodo
-        participante.orden_bloques = orden_bloques
+        participante = jugador.participant
+        participante.marco = jugador.marco = marco
+        participante.metodo = jugador.metodo = metodo
+        participante.orden_metodo = jugador.orden_metodo = orden_metodo
+        participante.orden_bloques = jugador.orden_bloques = orden_bloques
 
 
 class Group(BaseGroup):
@@ -94,6 +97,11 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     hora_inicio = models.StringField(blank=True)
+    # Copia de las condiciones asignadas, para verlas en la pestaña Data
+    marco = models.StringField()
+    metodo = models.StringField()
+    orden_metodo = models.StringField(blank=True)
+    orden_bloques = models.StringField()
     segundos_instrucciones = models.IntegerField(blank=True)
 
     control1_p1 = models.IntegerField(
@@ -174,4 +182,4 @@ class Control1(Page):
         return errores
 
 
-page_sequence = [Consentimiento, NoAcepta, Instrucciones, Control1]
+page_sequence = [Consentimiento, Instrucciones, Control1]

@@ -1,0 +1,13 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tu ingreso{{ endblock }}
+{{ block content }}
+
+<p>Se acabó el tiempo. Resolviste correctamente <b>{{ player.tarea_aciertos }}</b>
+{{ if player.tarea_aciertos == 1 }}ejercicio{{ else }}ejercicios{{ endif }}.</p>
+
+<p>Tu ingreso es {{ player.tarea_aciertos }} × {{ session.config.puntos_por_acierto }} =
+<b>{{ player.ingreso }} {{ session.config.etiqueta_moneda }}</b>. Este será tu ingreso
+en cada una de las rondas.</p>
+
+{{ next_button }}
+{{ endblock }}

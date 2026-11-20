@@ -1,0 +1,64 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Tu tarea{{ endblock }}
+{{ block content }}
+
+<p>Ejercicio <b id="numero"></b>. ¿Cuántas veces aparece <span id="objetivo" class="objetivo"></span>?</p>
+
+<table class="matriz" id="matriz"></table>
+
+<div class="respuesta">
+    <input type="number" id="respuesta" min="0" max="24" class="form-control" autocomplete="off">
+    <button type="button" id="enviar" class="btn btn-primary">Responder</button>
+</div>
+
+<style>
+    .matriz { border-collapse: collapse; margin: 0 auto 1rem auto; }
+    .matriz td { width: 2.6rem; height: 2.6rem; text-align: center; font-size: 1.6rem;
+                 border: 1px solid #ccc; }
+    .objetivo { font-size: 1.6rem; }
+    .respuesta { display: flex; gap: .6rem; justify-content: center; }
+    .respuesta input { max-width: 7rem; }
+</style>
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // Dibuja un ejercicio: la matriz, la figura que hay que contar y su número.
+    function mostrar(ejercicio) {
+        document.getElementById('numero').textContent = ejercicio.numero;
+        document.getElementById('objetivo').textContent = ejercicio.objetivo;
+        const tabla = document.getElementById('matriz');
+        tabla.innerHTML = '';
+        for (const fila of ejercicio.matriz) {
+            const tr = tabla.insertRow();
+            for (const figura of fila) {
+                tr.insertCell().textContent = figura;
+            }
+        }
+        const casilla = document.getElementById('respuesta');
+        casilla.value = '';
+        casilla.focus();
+    }
+
+    // Envía la respuesta al servidor, que la revisa y devuelve el siguiente ejercicio.
+    function enviar() {
+        const valor = document.getElementById('respuesta').value;
+        if (valor === '') return;
+        liveSend({respuesta: valor});
+    }
+
+    function liveRecv(ejercicio) {
+        mostrar(ejercicio);
+    }
+
+    document.getElementById('enviar').addEventListener('click', enviar);
+    document.getElementById('respuesta').addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();  // que Enter no envíe la página entera
+            enviar();
+        }
+    });
+
+    mostrar(js_vars);
+</script>
+{{ endblock }}

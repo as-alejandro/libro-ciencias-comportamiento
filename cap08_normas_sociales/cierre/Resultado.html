@@ -1,0 +1,22 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Resultado{{ endblock }}
+{{ block content }}
+
+{{ if not hipotetico }}
+    {{ if player.seleccionado_pago }}
+        <p>Has sido seleccionado para el pago. La tarea sorteada ha sido
+        <b>{{ nombre_tarea }}</b> y has ganado <b>{{ player.ganancia_fichas }}
+        {{ session.config.etiqueta_moneda }}</b>{{ if monetario }}, equivalentes a
+        <b>{{ ganancia_local }} {{ session.config.moneda_local }}</b>{{ endif }}.</p>
+    {{ else }}
+        <p>En esta ocasión no has sido seleccionado para el pago. Habrías ganado
+        {{ player.ganancia_fichas }} {{ session.config.etiqueta_moneda }}.</p>
+    {{ endif }}
+{{ endif }}
+
+<p>Gracias por participar. Tu profesora o profesor comentará en clase los resultados
+del grupo.</p>
+
+<p>Ya puedes cerrar esta ventana.</p>
+
+{{ endblock }}

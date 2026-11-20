@@ -1,0 +1,29 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Resultado de la ronda {{ player.round_number }}{{ endblock }}
+{{ block content }}
+
+<table class="tabla-datos">
+    <tr><td>Tu ingreso</td><td>{{ player.ingreso }}</td></tr>
+    <tr><td>Tu ingreso declarado</td><td>{{ player.declarado }}</td></tr>
+    <tr><td>Tu impuesto total</td><td>{{ impuesto_pagado }}</td></tr>
+    <tr><td>Cantidad destinada por ti al fondo público</td><td>{{ aporte_fondo }}</td></tr>
+    <tr><td>¿Fuiste auditado?</td><td>{{ if player.auditado }}Sí{{ else }}No{{ endif }}</td></tr>
+    <tr><td>Impuesto adicional pagado</td><td>{{ impuesto_adicional }}</td></tr>
+    <tr><td>Multa</td><td>{{ multa }}</td></tr>
+    <tr><td>Contribución total del grupo al fondo público</td><td>{{ aporte_total }}</td></tr>
+    <tr><td>Fondo público generado</td><td>{{ fondo_generado }}</td></tr>
+    <tr><td>Tu pago procedente del fondo público</td><td>{{ pago_fondo }}</td></tr>
+    <tr class="total"><td>Tu pago total de la ronda</td>
+        <td>{{ pago_ronda }} {{ session.config.etiqueta_moneda }}</td></tr>
+</table>
+
+{{ next_button }}
+
+<style>
+    .tabla-datos { width: 100%; border-collapse: collapse; margin-bottom: 1.25rem; }
+    .tabla-datos td { padding: .45rem .6rem; border-bottom: 1px solid #ddd; }
+    .tabla-datos td:last-child { text-align: right; white-space: nowrap; }
+    .tabla-datos .total td { font-weight: 700; border-top: 2px solid var(--texto, #111111);
+                             border-bottom: none; font-size: 1.1rem; }
+</style>
+{{ endblock }}
