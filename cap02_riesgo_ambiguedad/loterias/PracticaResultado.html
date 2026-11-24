@@ -2,15 +2,15 @@
 {{ block title }}Resultado de la práctica{{ endblock }}
 {{ block content }}
 
-<p>Usted eligió la opción <b>{{ player.practica_eleccion }}</b>. El computador sorteó el número
-<b>{{ player.practica_numero }}</b>. Si esta decisión se pagara, habría ganado
+<p>Elegiste la opción <b>{{ player.practica_eleccion }}</b>. El computador sorteó el número
+<b>{{ player.practica_numero }}</b>. Si esta decisión se pagara, habrías ganado
 <b>{{ player.practica_pago }} UME</b>.</p>
 
 <p class="nota">Como el número sorteado
 {{ if player.practica_numero <= session.config.pract_prob }}está entre 1 y
-{{ session.config.pract_prob }}, se aplica el primer resultado de la opción que eligió.
+{{ session.config.pract_prob }}, se aplica el primer resultado de la opción que elegiste.
 {{ else }}es mayor que {{ session.config.pract_prob }}, se aplica el segundo resultado de la
-opción que eligió.{{ endif }}</p>
+opción que elegiste.{{ endif }}</p>
 
 {{ next_button }}
 

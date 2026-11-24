@@ -2,7 +2,7 @@
 {{ block title }}Instrucciones{{ endblock }}
 {{ block content }}
 
-<p>En este experimento tomará {{ C.NUM_DECISIONES }} decisiones. En cada una elegirá entre
+<p>En este experimento tomarás {{ C.NUM_DECISIONES }} decisiones. En cada una elegirás entre
 dos opciones, A y B. Cada opción es una lotería:</p>
 
 <ul>
@@ -13,46 +13,34 @@ dos opciones, A y B. Cada opción es una lotería:</p>
 <p>En cada decisión cambiará la probabilidad de obtener cada uno de los dos resultados.</p>
 
 <div class="recuadro">
-    <p class="subtitulo">Cómo se determina su pago</p>
+    <p class="subtitulo">Cómo se determina tu pago</p>
 
-    <p>Solo se pagará una de sus {{ C.NUM_DECISIONES }} decisiones. Cuando las haya tomado
+    <p>Solo se pagará una de tus {{ C.NUM_DECISIONES }} decisiones. Cuando las hayas tomado
     todas, el computador hará dos sorteos:</p>
 
     <ol>
         <li>Elegirá al azar cuál de las {{ C.NUM_DECISIONES }} decisiones se paga. Todas tienen
         la misma probabilidad de ser elegidas.</li>
-        <li>Una vez elegida la decisión, se aplicará la opción que usted escogió en ella. Por
-        ejemplo, si la decisión elegida es la 1 y usted escogió la opción A, puede ganar
+        <li>Una vez elegida la decisión, se aplicará la opción que escogiste en ella. Por
+        ejemplo, si la decisión elegida es la 1 y escogiste la opción A, puedes ganar
         {{ session.config.a_alto }} UME con probabilidad {{ C.PASO_PROB }} % o
         {{ session.config.a_bajo }} UME con probabilidad {{ resto_1 }} %. El computador elegirá
         entonces al azar un número entre 1 y {{ C.SORTEO_MAX }}. Si el número está entre 1 y
-        {{ C.PASO_PROB }}, ganará {{ session.config.a_alto }} UME; si está entre
-        {{ siguiente_1 }} y {{ C.SORTEO_MAX }}, ganará {{ session.config.a_bajo }} UME.</li>
+        {{ C.PASO_PROB }}, ganarás {{ session.config.a_alto }} UME; si está entre
+        {{ siguiente_1 }} y {{ C.SORTEO_MAX }}, ganarás {{ session.config.a_bajo }} UME.</li>
     </ol>
 </div>
 
-<p>Usted no sabe qué decisión se pagará, así que le conviene elegir en cada una la opción que
-realmente prefiere. No hay respuestas correctas ni incorrectas.</p>
+<p>No sabes qué decisión se pagará, así que te conviene elegir en cada una la opción que
+realmente prefieres. No hay respuestas correctas ni incorrectas.</p>
 
-<p>Sus ganancias se expresan en UME (unidades monetarias experimentales). Al final, las UME se
+<p>Tus ganancias se expresan en UME (unidades monetarias experimentales). Al final, las UME se
 convierten en pesos: 1 UME = {{ tasa }}.
-{{ if hay_pago_fijo }}Además, recibirá un pago fijo de {{ pago_fijo }} por su participación.{{ endif }}</p>
+{{ if hay_pago_fijo }}Además, recibirás un pago fijo de {{ pago_fijo }} por tu participación.{{ endif }}</p>
 
 {{ if session.config.en_laboratorio }}
-<p>Si tiene alguna pregunta, levante la mano y un experimentador acudirá a su puesto.</p>
+<p>Si tienes alguna pregunta, levanta la mano y un experimentador acudirá a tu puesto.</p>
 {{ endif }}
 
 {{ next_button }}
-
-<style>
-    .recuadro {
-        background: var(--fondo, #EEF1F4);
-        border-left: 4px solid var(--acento, #C8102E);
-        border-radius: 6px;
-        padding: 1rem 1.25rem .25rem 1.25rem;
-        margin: 1.25rem 0;
-    }
-    .subtitulo { font-family: 'Lora', Georgia, serif; font-size: 1.2rem; font-weight: 600;
-                 margin-bottom: .5rem; }
-</style>
 {{ endblock }}

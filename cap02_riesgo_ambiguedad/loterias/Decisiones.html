@@ -1,14 +1,14 @@
 {{ extends "global/Page.html" }}
-{{ block title }}Sus decisiones{{ endblock }}
+{{ block title }}Tus decisiones{{ endblock }}
 {{ block content }}
 
-<p>Elija la opción A o la opción B en cada una de las {{ C.NUM_DECISIONES }} decisiones.
-Recuerde: el computador elegirá al azar una decisión para el pago y luego un número del 1 al
+<p>Elige la opción A o la opción B en cada una de las {{ C.NUM_DECISIONES }} decisiones.
+Recuerda: el computador elegirá al azar una decisión para el pago y luego un número del 1 al
 {{ C.SORTEO_MAX }}.</p>
 
-<p><b>Importante:</b> si empezó por la opción A en la primera decisión y luego pasó a la opción
-B en una decisión subsecuente, no puede elegir nuevamente la opción A en las decisiones
-siguientes. La misma lógica es válida si empezó por la opción B y luego pasó a la opción A.</p>
+<p><b>Importante:</b> si empezaste por la opción A en la primera decisión y luego pasaste a la
+opción B en una decisión subsecuente, no puedes elegir nuevamente la opción A en las decisiones
+siguientes. La misma lógica es válida si empezaste por la opción B y luego pasaste a la opción A.</p>
 
 <table class="lista">
     <tr>
@@ -32,8 +32,8 @@ siguientes. La misma lógica es válida si empezó por la opción B y luego pas�
     {{ endfor }}
 </table>
 
-<p id="aviso" class="aviso-error" hidden>Solo puede cambiar una vez entre la opción A y la
-opción B. Revise sus decisiones.</p>
+<p id="aviso" class="aviso-error" hidden>Solo puedes cambiar una vez entre la opción A y la
+opción B. Revisa tus decisiones.</p>
 
 {{ next_button }}
 

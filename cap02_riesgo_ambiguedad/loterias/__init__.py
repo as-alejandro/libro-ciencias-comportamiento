@@ -255,9 +255,9 @@ class Decisiones(Page):
         opciones = [values[f'opcion_{k}'] for k in range(1, C.NUM_DECISIONES + 1)]
         cambios = sum(1 for a, b in zip(opciones, opciones[1:]) if a != b)
         if cambios > 1:
-            return ('Solo puede cambiar una vez entre la opción A y la opción B. '
-                    'Revise sus decisiones.')
-
+            return ('Solo puedes cambiar una vez entre la opción A y la opción B. '
+                    'Revisa tus decisiones.')
+        
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         calcular_derivadas(player)
