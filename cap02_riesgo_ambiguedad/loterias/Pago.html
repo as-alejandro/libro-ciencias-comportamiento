@@ -1,0 +1,15 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Fin del experimento{{ endblock }}
+{{ block content }}
+
+<p>¡Gracias por su participación!</p>
+
+<p>La decisión sorteada ha sido la <b>{{ player.tarea_pagada }}</b>. En esta decisión usted
+eligió la opción <b>{{ player.opcion_pagada }}</b> y se seleccionó el número
+<b>{{ player.numero_elegido }}</b>.</p>
+
+<p>Su pago es de <b>{{ player.payoff }}</b>, es decir, <b>{{ pago_moneda }}</b>.
+{{ if hay_pago_fijo }}Con el pago fijo de participación, recibirá en total
+<b>{{ pago_total }}</b>.{{ endif }}</p>
+
+{{ endblock }}

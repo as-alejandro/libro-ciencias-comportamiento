@@ -1,0 +1,75 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Sus decisiones{{ endblock }}
+{{ block content }}
+
+<p>Elija la opción A o la opción B en cada una de las {{ C.NUM_DECISIONES }} decisiones.
+Recuerde: el computador elegirá al azar una decisión para el pago y luego un número del 1 al
+{{ C.SORTEO_MAX }}.</p>
+
+<p><b>Importante:</b> si empezó por la opción A en la primera decisión y luego pasó a la opción
+B en una decisión subsecuente, no puede elegir nuevamente la opción A en las decisiones
+siguientes. La misma lógica es válida si empezó por la opción B y luego pasó a la opción A.</p>
+
+<table class="lista">
+    <tr>
+        <th></th><th>Opción A</th><th class="elegir">A</th><th class="elegir">B</th>
+        <th class="derecha">Opción B</th>
+    </tr>
+    {{ for fila in filas }}
+    <tr>
+        <td class="num">{{ fila.k }}</td>
+        <td><label for="{{ fila.campo }}_A">Gana {{ session.config.a_alto }} UME con probabilidad
+            {{ fila.p }} % o gana {{ session.config.a_bajo }} UME con probabilidad
+            {{ fila.resto }} %.</label></td>
+        <td class="elegir"><input type="radio" name="{{ fila.campo }}" value="A"
+            id="{{ fila.campo }}_A" required></td>
+        <td class="elegir"><input type="radio" name="{{ fila.campo }}" value="B"
+            id="{{ fila.campo }}_B" required></td>
+        <td class="derecha"><label for="{{ fila.campo }}_B">Gana {{ session.config.b_alto }} UME
+            con probabilidad {{ fila.p }} % o gana {{ session.config.b_bajo }} UME con
+            probabilidad {{ fila.resto }} %.</label></td>
+    </tr>
+    {{ endfor }}
+</table>
+
+<p id="aviso" class="aviso-error" hidden>Solo puede cambiar una vez entre la opción A y la
+opción B. Revise sus decisiones.</p>
+
+{{ next_button }}
+
+{{ include "loterias/estilo_lista.html" }}
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // Antes de enviar, comprueba en el navegador que haya como máximo un cambio entre A y B.
+    // (El servidor vuelve a comprobarlo; esto solo evita perder las respuestas marcadas.)
+    const total = {{ C.NUM_DECISIONES }};
+    const aviso = document.getElementById('aviso');
+
+    function contarCambios() {
+        const elegidas = [];
+        for (let k = 1; k <= total; k++) {
+            const marcada = document.querySelector('input[name="opcion_' + k + '"]:checked');
+            elegidas.push(marcada ? marcada.value : null);
+        }
+        let cambios = 0;
+        for (let k = 1; k < total; k++) {
+            if (elegidas[k] && elegidas[k - 1] && elegidas[k] !== elegidas[k - 1]) cambios++;
+        }
+        return cambios;
+    }
+
+    document.querySelectorAll('.lista input[type=radio]').forEach(function (casilla) {
+        casilla.addEventListener('change', function () { aviso.hidden = contarCambios() <= 1; });
+    });
+
+    document.getElementById('form').addEventListener('submit', function (e) {
+        if (contarCambios() > 1) {
+            e.preventDefault();
+            aviso.hidden = false;
+            aviso.scrollIntoView({behavior: 'smooth', block: 'center'});
+        }
+    });
+</script>
+{{ endblock }}

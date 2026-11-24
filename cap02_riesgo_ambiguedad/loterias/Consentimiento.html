@@ -1,0 +1,22 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Bienvenido/a{{ endblock }}
+{{ block content }}
+
+<p>Gracias por participar en este experimento sobre toma de decisiones. El experimento
+dura unos 15 minutos.</p>
+
+<p>Su participación es voluntaria y puede retirarse en cualquier momento. Sus respuestas
+son anónimas y solo se utilizarán con fines de investigación y docencia.</p>
+
+<p>Durante la sesión, por favor, no hable con los demás participantes y mantenga su
+teléfono apagado.</p>
+
+{{ if session.config.en_laboratorio }}
+<p>Si tiene alguna pregunta, levante la mano y alguno de los experimentadores se acercará
+a ayudarle.</p>
+{{ endif }}
+
+{{ formfields }}
+
+{{ next_button }}
+{{ endblock }}

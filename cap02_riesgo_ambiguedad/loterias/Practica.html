@@ -1,0 +1,31 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Decisión de práctica{{ endblock }}
+{{ block content }}
+
+<p>Antes de empezar, veamos cómo funciona con un ejemplo. Las cantidades son distintas de las
+del experimento y esta decisión no se paga.</p>
+
+<p>Por ejemplo, le vamos a pedir que escoja entre la opción X y la opción Y:</p>
+
+<table class="lista">
+    <tr>
+        <th>Opción X</th><th class="elegir">X</th><th class="elegir">Y</th><th class="derecha">Opción Y</th>
+    </tr>
+    <tr>
+        <td><label for="x">Gana {{ session.config.pract_x_1 }} UME con probabilidad
+            {{ session.config.pract_prob }} % o gana {{ session.config.pract_x_2 }} UME con
+            probabilidad {{ resto }} %.</label></td>
+        <td class="elegir"><input type="radio" name="practica_eleccion" value="X" id="x"></td>
+        <td class="elegir"><input type="radio" name="practica_eleccion" value="Y" id="y"></td>
+        <td class="derecha"><label for="y">Gana {{ session.config.pract_y_1 }} UME con
+            probabilidad {{ session.config.pract_prob }} % o gana {{ session.config.pract_y_2 }}
+            UME con probabilidad {{ resto }} %.</label></td>
+    </tr>
+</table>
+
+{{ formfield_errors 'practica_eleccion' }}
+
+{{ next_button }}
+
+{{ include "loterias/estilo_lista.html" }}
+{{ endblock }}

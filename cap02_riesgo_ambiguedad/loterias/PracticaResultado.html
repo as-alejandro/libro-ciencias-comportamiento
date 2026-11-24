@@ -1,0 +1,18 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Resultado de la práctica{{ endblock }}
+{{ block content }}
+
+<p>Usted eligió la opción <b>{{ player.practica_eleccion }}</b>. El computador sorteó el número
+<b>{{ player.practica_numero }}</b>. Si esta decisión se pagara, habría ganado
+<b>{{ player.practica_pago }} UME</b>.</p>
+
+<p class="nota">Como el número sorteado
+{{ if player.practica_numero <= session.config.pract_prob }}está entre 1 y
+{{ session.config.pract_prob }}, se aplica el primer resultado de la opción que eligió.
+{{ else }}es mayor que {{ session.config.pract_prob }}, se aplica el segundo resultado de la
+opción que eligió.{{ endif }}</p>
+
+{{ next_button }}
+
+<style> .nota { color: var(--secundario, #3D5A80); } </style>
+{{ endblock }}
