@@ -1,39 +1,31 @@
 {{ extends "global/Page.html" }}
-{{ block title }}Resultado{{ endblock }}
+{{ block title }}Resultado de la actividad{{ endblock }}
 {{ block content }}
 
-{{ if sin_tarea }}
-<p>No fue posible calcular una ganancia con tus respuestas.</p>
+<p>El escenario elegido al azar para calcular las ganancias de todos fue el
+<b>Escenario {{ escenario }}: {{ nombre_escenario }}</b>.</p>
 
-{{ elif incentivos == 'dinero_real' }}
-    {{ if player.seleccionado_pago }}
-    <p>La decisión sorteada para tu pago fue <b>{{ nombre_tarea }}</b>, y ganaste
-    <b>{{ player.ganancia_fichas }} {{ session.config.etiqueta_moneda }}</b>, equivalentes a
-    <b>{{ ganancia_local }} {{ session.config.moneda_local }}</b>.</p>
-    {{ else }}
-    <p>En esta ocasión no has sido seleccionado o seleccionada para el pago. La decisión
-    sorteada fue <b>{{ nombre_tarea }}</b>, y habrías ganado {{ player.ganancia_fichas }}
-    {{ session.config.etiqueta_moneda }}.</p>
-    {{ endif }}
+<table class="tabla-datos tabla-resultado">
+    <tr>
+        <th>Decisiones que tomaste</th>
+        <td>{{ tomadas }}</td>
+    </tr>
+    <tr>
+        <th>Decisión que se aplicó</th>
+        <td>{{ aplicada }}</td>
+    </tr>
+    <tr>
+        <th>Cómo se calculan tus ganancias</th>
+        <td>{{ calculo }}</td>
+    </tr>
+</table>
 
-{{ elif incentivos == 'puntos' }}
-<p>La decisión sorteada fue <b>{{ nombre_tarea }}</b>, y ganaste
-<b>{{ player.ganancia_fichas }} {{ session.config.etiqueta_moneda }}</b>.</p>
+<p>Tus ganancias son <b>{{ player.ganancia_fichas }} {{ session.config.etiqueta_moneda }}</b>.
+Gracias por participar.</p>
 
-{{ else }}
-<p>Gracias por participar; esta actividad no incluyó pago.</p>
-{{ endif }}
-
-{{ if session.config.revelar_criterio_induccion }}
-<p><b>Cómo se formaron los grupos.</b>
-{{ if metodo == 'pinturas' }}Tu grupo se asignó según el conjunto de imágenes que preferiste.
-{{ elif metodo == 'colores' }}Tu grupo se asignó según el color que preferiste.
-{{ else }}Tu grupo se asignó mediante un sorteo.{{ endif }}
-Los grupos no tenían ningún otro significado.</p>
-{{ endif }}
-
-<p>Tu profesora o profesor comentará en clase los resultados del grupo.</p>
-
-<p>Ya puedes cerrar esta ventana.</p>
-
+<style>
+    .tabla-resultado { margin: 1rem 0 1.5rem; }
+    .tabla-resultado th { width: 30%; vertical-align: top; text-align: left; padding-right: 1rem; }
+    .tabla-resultado td, .tabla-resultado th { padding-top: .5rem; padding-bottom: .5rem; }
+</style>
 {{ endblock }}

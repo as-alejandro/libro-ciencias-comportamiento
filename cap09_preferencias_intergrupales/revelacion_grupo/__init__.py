@@ -1,4 +1,5 @@
 from otree.api import *
+from utilidades import otro_grupo, en_orden_aleatorio
 
 
 doc = """
@@ -29,7 +30,7 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
     )
     control2_p2 = models.IntegerField(
-        label='¿Y cuando te digamos que es «del grupo contrario»?',
+        label='Y cuando te digamos que es «del otro grupo», ¿qué significa?',
         widget=widgets.RadioSelect,
     )
     control2_intentos = models.IntegerField(initial=0)
@@ -41,12 +42,9 @@ def participa(player: Player):
     """True si el participante aceptó participar."""
     return player.participant.consentimiento
 
-
 def grupos(player: Player):
-    """Devuelve (mi grupo, el otro grupo), por ejemplo ('A', 'B')."""
-    propio = player.participant.grupo_asignado
-    otro = 'B' if propio == 'A' else 'A'
-    return propio, otro
+    """Devuelve (mi grupo, el otro grupo), por ejemplo ('Klee', 'Kandinsky')."""
+    return player.participant.grupo_asignado, otro_grupo(player)
 
 
 def opciones_control2(player: Player):
@@ -60,11 +58,10 @@ def opciones_control2(player: Player):
 
 
 def control2_p1_choices(player: Player):
-    return opciones_control2(player)
-
+    return en_orden_aleatorio(player, 'control2_p1', opciones_control2(player))
 
 def control2_p2_choices(player: Player):
-    return opciones_control2(player)
+    return en_orden_aleatorio(player, 'control2_p2', opciones_control2(player))
 
 
 # Respuesta correcta de cada pregunta del control 2
@@ -80,10 +77,7 @@ class TuGrupo(Page):
 
     @staticmethod
     def vars_for_template(player: Player):
-        return dict(
-            grupo=player.participant.grupo_asignado,
-            por_sorteo=player.session.config['metodo_induccion_grupo'] == 'moneda',
-        )
+        return dict(grupo=player.participant.grupo_asignado)
 
 
 class Control2(Page):

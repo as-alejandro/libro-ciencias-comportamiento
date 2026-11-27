@@ -2,15 +2,12 @@
 {{ block title }}Tu grupo{{ endblock }}
 {{ block content }}
 
-{{ if por_sorteo }}
-<p>Según el sorteo, has sido asignado o asignada al <b>grupo {{ grupo }}</b>.</p>
-{{ else }}
-<p>Según tu respuesta anterior, has sido asignado o asignada al <b>grupo {{ grupo }}</b>.</p>
-{{ endif }}
+<p>Según tus elecciones, prefieres las pinturas de {{ grupo }}. Por eso perteneces al
+<b>grupo {{ grupo }}</b>.</p>
 
-<p>En las siguientes pantallas vas a tomar decisiones frente a otros participantes
-de esta sesión. Algunos pertenecen a tu mismo grupo y otros al grupo contrario;
-en cada pantalla se indicará de cuál se trata.</p>
+<p>En las siguientes pantallas vas a tomar decisiones que involucran a otros participantes
+de esta sesión. Algunos son de tu propio grupo y otros son del otro grupo; en cada pantalla
+te indicaremos de cuál se trata.</p>
 
 {{ next_button }}
 {{ endblock }}

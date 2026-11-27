@@ -1,0 +1,59 @@
+{{ extends "global/Page.html" }}
+{{ block title }}{{ if es_emisor }}Si fueras quien envía{{ else }}Si fueras quien recibe{{ endif }}
+<span style="display:block; font-size:1rem; font-weight:400; color:#999; margin-top:.3rem;">({{ numero }} de 2)</span>{{ endblock }}
+{{ block content }}
+{{ include "intro/banner_grupo.html" }}
+
+{{ if es_emisor }}
+
+<p>Imagina que eres quien envía. Tienes {{ session.config.dotacion_confianza }}
+{{ session.config.etiqueta_moneda }} y puedes enviarle una parte a otra persona de esta
+sesión, que pertenece {{ if es_propio }}<b>a tu propio grupo</b>{{ else }}<b>al otro grupo</b>{{ endif }}.
+Lo que envíes se multiplicará por {{ session.config.multiplicador_confianza }} antes de
+llegar, y esa persona decidirá cuántas {{ session.config.etiqueta_moneda }} te devuelve.</p>
+
+<p><b>¿Cuántas {{ session.config.etiqueta_moneda }} le envías?</b></p>
+
+{{ formfields }}
+
+{{ else }}
+
+<p>Ahora imagina que eres quien recibe. Quien te envía es una persona de esta sesión que
+pertenece {{ if es_propio }}<b>a tu propio grupo</b>{{ else }}<b>al otro grupo</b>{{ endif }}.
+Para cada monto que te podrían haber enviado, indícanos cuántas
+{{ session.config.etiqueta_moneda }} le devolverías.</p>
+
+<table class="tabla-datos tabla-receptor">
+    <tr>
+        <th>Si te envían…</th>
+        <th>¿Cuántas {{ session.config.etiqueta_moneda }} le devuelves?</th>
+    </tr>
+    {{ for fila in filas }}
+    <tr>
+        <td>{{ fila.enviado }} {{ session.config.etiqueta_moneda }}</td>
+        <td>
+            {{ formfield fila.campo }}
+            <div class="rango">recibes {{ fila.recibido }} · puedes devolver de 0 a {{ fila.recibido }}</div>
+        </td>
+    </tr>
+    {{ endfor }}
+</table>
+
+{{ endif }}
+
+<p>Recuerda que solo una de tus respuestas se usará para calcular tu pago.</p>
+
+{{ next_button }}
+
+<style>
+    .tabla-receptor { margin-bottom: 1.5rem; }
+    .tabla-receptor input { max-width: 8rem; }
+    .tabla-receptor ._formfield { margin-bottom: .2rem; }
+    .rango { font-size: .85rem; color: #777; }
+</style>
+{{ endblock }}
+
+{{ block scripts }}
+<script>const RANGOS = {{ rangos|json }};</script>
+{{ include "global/validar_numeros.html" }}
+{{ endblock }}

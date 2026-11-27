@@ -1,0 +1,20 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Escenario 2: Repartir entre tú y otra persona{{ endblock }}
+{{ block content }}
+{{ include "intro/banner_grupo.html" }}
+
+<p>Tienes {{ session.config.dotacion_dictador }} {{ session.config.etiqueta_moneda }} para
+repartir entre tú y otra persona de esta sesión. Esa persona no puede hacer nada: solo
+recibe lo que decidas darle.</p>
+
+<p>Como todavía no sabemos quién será esa persona, vas a decidir para dos casos: que sea de
+tu propio grupo o que sea del otro grupo.</p>
+
+<p>Si este escenario es el elegido al final, el sistema te asignará al azar el rol de quien
+decide o el de quien recibe, y te emparejará con otra persona de esta sesión, sin importar
+su grupo. Si te toca decidir, se aplicará tu decisión para el grupo de esa persona y te
+quedarás con lo que no le des. Si te toca recibir, recibirás lo que la otra persona haya
+decidido darte.</p>
+
+{{ next_button }}
+{{ endblock }}

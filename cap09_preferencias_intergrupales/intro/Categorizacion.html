@@ -2,7 +2,6 @@
 {{ block title }}Tus preferencias{{ endblock }}
 {{ block content }}
 
-{{ if metodo == 'pinturas' }}
 <p>A continuación verás dos conjuntos de imágenes, A y B. Elige el conjunto que más te guste.</p>
 
 <div class="conjunto">
@@ -22,20 +21,6 @@
     <img src="{{ static 'cap09/pinturas/b2.jpg' }}" alt="Imagen 3 del conjunto B">
     </div>
 </div>
-{{ endif }}
-
-{{ if metodo == 'colores' }}
-<p>Elige el color que más te guste entre estos dos.</p>
-
-<div class="colores">
-    <div><span class="muestra" style="background:#2F6DB5"></span>Azul</div>
-    <div><span class="muestra" style="background:#3E9B5A"></span>Verde</div>
-</div>
-{{ endif }}
-
-{{ if metodo == 'moneda' }}
-<p>Vamos a asignarte a un grupo mediante un sorteo aleatorio.</p>
-{{ endif }}
 
 {{ formfields }}
 
@@ -45,8 +30,5 @@
     .conjunto { margin-bottom: 1.5rem; }
     .conjunto .fila { display: flex; gap: 2%; align-items: center; justify-content: center;}
     .conjunto img { height: 150px; width: auto; max-width: 32%; object-fit: contain; border: 1px solid #ccc; }
-    .colores { display: flex; gap: 2rem; margin-bottom: 1rem; }
-    .muestra { display: inline-block; width: 70px; height: 70px; border-radius: 6px;
-               vertical-align: middle; margin-right: .6rem; }
 </style>
 {{ endblock }}

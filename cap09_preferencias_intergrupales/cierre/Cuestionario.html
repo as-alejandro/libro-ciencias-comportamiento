@@ -1,11 +1,70 @@
 {{ extends "global/Page.html" }}
-{{ block title }}Unas preguntas finales{{ endblock }}
+{{ block title }}Cuestionario final{{ endblock }}
 {{ block content }}
 
-<p>Para terminar, responde estas preguntas. Todas son opcionales, salvo la de la
-claridad de las instrucciones.</p>
+<p>Para terminar, responde estas preguntas.</p>
 
-{{ formfields }}
+<div class="pregunta en-linea">{{ formfield 'edad' }}</div>
+<div class="pregunta">{{ formfield 'genero' }}</div>
+<div class="pregunta">{{ formfield 'universidad' }}</div>
+<div class="pregunta">{{ formfield 'programa' }}</div>
+<div class="pregunta en-linea">{{ formfield 'semestre' }}</div>
+<div class="pregunta">{{ formfield 'grupo_recordado' }}</div>
+
+<div class="pregunta">
+    <p>Antes de esta actividad, ¿qué tan conocidas te eran las pinturas de Klee?</p>
+    <div class="escala">
+        <span class="ancla">Nada conocidas</span>
+        {{ for opcion in form.familiaridad_klee }}<label>{{ opcion }}{{ opcion.label }}</label>{{ endfor }}
+        <span class="ancla">Muy conocidas</span>
+    </div>
+    {{ formfield_errors 'familiaridad_klee' }}
+</div>
+
+<div class="pregunta">
+    <p>Antes de esta actividad, ¿qué tan conocidas te eran las pinturas de Kandinsky?</p>
+    <div class="escala">
+        <span class="ancla">Nada conocidas</span>
+        {{ for opcion in form.familiaridad_kandinsky }}<label>{{ opcion }}{{ opcion.label }}</label>{{ endfor }}
+        <span class="ancla">Muy conocidas</span>
+    </div>
+    {{ formfield_errors 'familiaridad_kandinsky' }}
+</div>
+
+<div class="pregunta">{{ formfield 'influencia_grupo' }}</div>
+<div class="pregunta" id="seguimiento">{{ formfield 'influencia_direccion' }}</div>
+
+<div class="pregunta">
+    <p>¿Qué tan claras te parecieron las instrucciones de la actividad?</p>
+    <div class="escala">
+        <span class="ancla">Nada claras</span>
+        {{ for opcion in form.claridad }}<label>{{ opcion }}{{ opcion.label }}</label>{{ endfor }}
+        <span class="ancla">Muy claras</span>
+    </div>
+    {{ formfield_errors 'claridad' }}
+</div>
+
+<div class="pregunta">{{ formfield 'comentario' }}</div>
 
 {{ next_button }}
+{{ include "_templates/global/escala_estilo.html" }}
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // La pregunta de seguimiento solo aparece si responde «Sí» a la influencia del grupo.
+    const seguimiento = document.getElementById('seguimiento');
+    const opciones = document.querySelectorAll('input[name=influencia_grupo]');
+
+    function actualizar() {
+        const marcada = document.querySelector('input[name=influencia_grupo]:checked');
+        seguimiento.style.display = (marcada && marcada.value === 'Sí') ? '' : 'none';
+    }
+    opciones.forEach(function (o) { o.addEventListener('change', actualizar); });
+    actualizar();
+</script>
+
+
+<script>const RANGOS = {{ rangos|json }};</script>
+{{ include "_templates/global/validar_numeros.html" }}
 {{ endblock }}

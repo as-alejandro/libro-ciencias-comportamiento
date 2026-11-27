@@ -1,19 +1,33 @@
 {{ extends "global/Page.html" }}
-{{ block title }}Enviar y devolver{{ endblock }}
+{{ block title }}Escenario 3: Enviar y devolver{{ endblock }}
 {{ block content }}
+{{ include "intro/banner_grupo.html" }}
 
-<p>En esta parte, una persona puede enviarle a otra parte de sus
-{{ session.config.dotacion_confianza }} {{ session.config.etiqueta_moneda }}. Lo que envíe
-se multiplica por {{ session.config.multiplicador_confianza }} antes de llegar a la otra
-persona, que decide cuánto le devuelve.</p>
+<p>En este escenario participan dos personas: quien envía y quien recibe.</p>
 
-<p>Por ejemplo, si alguien envía {{ session.config.dotacion_confianza }}, la otra persona
-recibe {{ maximo_recibido }} y puede devolverle desde 0 hasta {{ maximo_recibido }}.</p>
+<p>Quien envía empieza con {{ session.config.dotacion_confianza }}
+{{ session.config.etiqueta_moneda }} y decide cuántas le envía a quien recibe, eligiendo
+entre {{ niveles }}. Lo que envía se multiplica por
+{{ session.config.multiplicador_confianza }} antes de llegar. Después, quien recibe decide
+cuántas de esas {{ session.config.etiqueta_moneda }} le devuelve a quien envió, desde 0
+hasta todo lo que recibió.</p>
 
-<p>Vas a responder como quien envía y como quien recibe. En lugar de esperar a que
-otra persona decida, te pediremos tu respuesta para cada caso posible.</p>
+<p>Quien envía se queda con lo que no envió más lo que le devuelvan. Quien recibe se queda
+con lo que no devuelva.</p>
 
-{{ formfields }}
+<p>Por ejemplo, si quien envía manda {{ session.config.dotacion_confianza }}, quien recibe
+obtiene {{ maximo_recibido }} y puede devolverle desde 0 hasta esa cantidad.</p>
+
+<p>Tú vas a decidir en los dos roles, porque todavía no sabemos cuál te va a tocar. Si este
+escenario es el elegido al final, el sistema te asignará al azar uno de los dos roles y te
+emparejará con otra persona de esta sesión, sin importar su grupo; esa persona puede ser de
+tu propio grupo o del otro grupo. Se aplicará la decisión que tomaste para ese caso. Por eso,
+en las dos pantallas siguientes tendrás que responder para todos los casos posibles.</p>
+
+<div class="recuadro">
+    <p class="subtitulo">Comprueba que lo entendiste</p>
+    {{ formfields }}
+</div>
 
 {{ next_button }}
 {{ endblock }}

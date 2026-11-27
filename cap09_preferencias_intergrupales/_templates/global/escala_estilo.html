@@ -1,0 +1,22 @@
+<style>
+    /* Cada pregunta: el enunciado en negrilla y las opciones sin negrilla */
+    .pregunta { margin-bottom: 1.6rem; }
+    .pregunta > p,
+    .pregunta .col-form-label { font-weight: 600; margin-bottom: .4rem; padding: 0; }
+    .pregunta .form-check-label,
+    .pregunta label.opcion { font-weight: 400; }
+    .pregunta .col-form-label:empty { display: none; }
+    .pregunta ._formfield { margin-bottom: 0; }
+
+    /* Escala con las anclas junto al primer y al último número: Nada ○1 ○2 … ○7 Muy fuerte */
+    .escala { display: flex; align-items: center; flex-wrap: wrap; gap: .4rem .9rem; margin: .2rem 0; }
+    .escala .ancla { color: #555; font-size: .95rem; }
+    .escala label { display: inline-flex; align-items: center; gap: .3rem; margin: 0; cursor: pointer; font-weight: 400; }
+    .escala input { margin: 0; }
+
+    /* Enunciado y casilla en la misma línea (por ejemplo, «Edad [   ]») */
+    .en-linea ._formfield { display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+    .en-linea .col-form-label { margin: 0; }
+    .en-linea input { max-width: 6rem; }
+    .en-linea select { max-width: 12rem; }
+</style>

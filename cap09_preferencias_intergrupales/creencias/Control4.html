@@ -1,15 +1,29 @@
 {{ extends "global/Page.html" }}
-{{ block title }}Comprueba que lo has entendido{{ endblock }}
+{{ block title }}Comprueba que lo entendiste{{ endblock }}
 {{ block content }}
+{{ include "intro/banner_grupo.html" }}
 
-<p>En las dos pantallas siguientes vas a predecir qué hicieron los demás participantes
-cuando respondieron como quien recibe.</p>
+<div class="pregunta">
+    <p><b>1. Cuando te digamos que «alguien envía {{ session.config.nivel_referencia_creencias }}
+    {{ session.config.etiqueta_moneda }}», ¿cuántas {{ session.config.etiqueta_moneda }} recibe
+    la otra persona?</b></p>
+    {{ formfield 'control4_p1' }}
+</div>
 
-<p>Cuando te digamos que «alguien envía {{ session.config.nivel_referencia_creencias }}
-{{ session.config.etiqueta_moneda }}», ¿cuántas {{ session.config.etiqueta_moneda }} recibe
-la otra persona?</p>
-
-{{ formfields }}
+<div class="pregunta">
+    <p><b>2. ¿Qué tienes que predecir en las dos pantallas siguientes?</b></p>
+    {{ formfield 'control4_p2' label='' }}
+</div>
 
 {{ next_button }}
+
+<style>
+    /* Quita la etiqueta vacía que oTree pone encima de las opciones */
+    .pregunta .col-form-label:empty { display: none; }
+    /* Pregunta pegada a sus opciones */
+    .pregunta p { margin-bottom: .4rem; }
+    .pregunta ._formfield { margin-bottom: 0; }
+    /* Separación entre una pregunta y la siguiente, y antes del botón */
+    .pregunta { margin-bottom: 1.5rem; }
+</style>
 {{ endblock }}

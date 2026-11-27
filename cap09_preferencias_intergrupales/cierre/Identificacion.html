@@ -2,11 +2,18 @@
 {{ block title }}Tu grupo y tú{{ endblock }}
 {{ block content }}
 
-<p>En una escala de 1 a {{ session.config.categorias_likert_identificacion }}, donde 1 es
-«nada» y {{ session.config.categorias_likert_identificacion }} es «mucho», ¿qué tanto
-sientes que perteneces al grupo que te fue asignado?</p>
-
-{{ formfields }}
+<div class="pregunta">
+    <p>¿Qué tan fuerte fue el vínculo que sentiste con tu propio grupo durante la actividad?</p>
+    <div class="escala">
+        <span class="ancla">Nada</span>
+        {{ for opcion in form.identificacion_grupo }}
+        <label>{{ opcion }}{{ opcion.label }}</label>
+        {{ endfor }}
+        <span class="ancla">Muy fuerte</span>
+    </div>
+    {{ formfield_errors 'identificacion_grupo' }}
+</div>
 
 {{ next_button }}
+{{ include "_templates/global/escala_estilo.html" }}
 {{ endblock }}

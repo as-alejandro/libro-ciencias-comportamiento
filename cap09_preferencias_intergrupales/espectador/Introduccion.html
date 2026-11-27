@@ -1,0 +1,21 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Escenario 1: Repartir entre otras dos personas{{ endblock }}
+{{ block content }}
+{{ include "intro/banner_grupo.html" }}
+
+<p>En este escenario vas a repartir {{ session.config.dotacion_espectador }}
+{{ session.config.etiqueta_moneda }} entre otras dos personas de esta sesión, en tres
+situaciones distintas. En cada situación te diremos de qué grupo son esas dos personas.
+Debes repartir las {{ session.config.dotacion_espectador }}
+{{ session.config.etiqueta_moneda }} completas, en números enteros. Tú no recibes nada de
+este reparto.</p>
+
+<p>Si este escenario es el elegido al final, el sistema ordenará al azar a todos los
+participantes. La primera persona de la lista repartirá entre la segunda y la tercera, la
+segunda entre la tercera y la cuarta, y así sucesivamente; la última repartirá entre la
+primera y la segunda. Se aplicará el reparto de la situación que corresponda a las dos
+personas que te toquen. Tus ganancias serán las {{ session.config.etiqueta_moneda }} que te
+asignen las dos personas que te preceden en la lista.</p>
+
+{{ next_button }}
+{{ endblock }}

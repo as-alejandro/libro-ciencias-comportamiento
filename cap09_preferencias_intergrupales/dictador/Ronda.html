@@ -1,38 +1,51 @@
 {{ extends "global/Page.html" }}
-{{ block title }}Reparte {{ session.config.dotacion_dictador }} {{ session.config.etiqueta_moneda }}{{ endblock }}
-{{ block content }}
+{{ block title }}Escenario 2: Repartir entre tú y otra persona
+<span style="display:block; font-size:1rem; font-weight:400; color:#999; margin-top:.3rem;">({{ numero }} de 2)</span>{{ endblock }}{{ block content }}
+{{ include "intro/banner_grupo.html" }}
 
 <p>Tienes {{ session.config.dotacion_dictador }} {{ session.config.etiqueta_moneda }} para
-repartir entre tú y otro participante de esta sesión, que pertenece
-{{ if es_propio }}a <b>tu mismo grupo</b>{{ else }}<b>al grupo contrario</b>{{ endif }}.
-Esa persona no puede hacer nada al respecto: solo recibe lo que tú decidas darle.
-¿Cuánto quieres quedarte y cuánto quieres darle?</p>
+repartir entre tú y otra persona de esta sesión. Imagina que esa persona pertenece
+{{ if es_propio }}<b>a tu propio grupo</b>{{ else }}<b>al otro grupo</b>{{ endif }}.
+Esa persona no puede hacer nada: solo recibe lo que decidas darle.</p>
+
+{{ if numero == 2 }}
+<p>Esta decisión es independiente de la anterior: tienes
+{{ session.config.dotacion_dictador }} {{ session.config.etiqueta_moneda }} nuevas.</p>
+{{ endif }}
+
+<p><b>¿Cuántas {{ session.config.etiqueta_moneda }} le das a la otra persona?
+(de 0 a {{ session.config.dotacion_dictador }})</b></p>
 
 {{ formfields }}
 
-<p id="reparto" class="reparto"></p>
+<p id="reparto"></p>
+
+<p>Recuerda que solo una de tus respuestas se usará para calcular tu pago.</p>
 
 {{ next_button }}
 {{ endblock }}
 
 {{ block scripts }}
 <script>
-    // Muestra, mientras se escribe, cuánto se queda la persona.
+    // Muestra "Te quedas con…" solo si lo escrito es un número entero entre 0 y la dotación.
     const dotacion = {{ session.config.dotacion_dictador }};
     const etiqueta = '{{ session.config.etiqueta_moneda }}';
-    const casilla = document.querySelector('input[type=number]');
+    const casilla = document.querySelector('input[name$="_cedido"]');
     const reparto = document.getElementById('reparto');
 
     function actualizar() {
-        const da = parseInt(casilla.value);
-        if (isNaN(da) || da < 0 || da > dotacion) {
+        const texto = casilla.value.trim();
+        const esEntero = /^[0-9]+$/.test(texto);
+        const da = parseInt(texto, 10);
+        if (!esEntero || da > dotacion) {
             reparto.textContent = '';
             return;
         }
-        reparto.textContent = 'Te quedas con ' + (dotacion - da) + ' ' + etiqueta +
-                              ' y le das ' + da + ' ' + etiqueta + '.';
+        reparto.textContent = 'Te quedas con ' + (dotacion - da) + ' ' + etiqueta + '.';
     }
     casilla.addEventListener('input', actualizar);
     actualizar();
 </script>
+<script>const RANGOS = {{ rangos|json }};</script>
+{{ include "_templates/global/validar_numeros.html" }}
 {{ endblock }}

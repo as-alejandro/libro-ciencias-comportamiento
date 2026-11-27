@@ -1,0 +1,61 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Escenario 1: Repartir entre otras dos personas
+<span style="display:block; font-size:1rem; font-weight:400; color:#999; margin-top:.3rem;">({{ numero }} de 3)</span>{{ endblock }}
+{{ block content }}
+{{ include "intro/banner_grupo.html" }}
+
+<p>Reparte {{ session.config.dotacion_espectador }} {{ session.config.etiqueta_moneda }}
+entre dos personas de esta sesión. Tú no recibes nada de este reparto.</p>
+
+<p><b>Situación:</b>
+{{ if caso == 'mixto' }}una persona es de tu propio grupo y la otra es del otro grupo.
+{{ elif caso == 'propio_propio' }}las dos personas son de tu propio grupo.
+{{ else }}las dos personas son del otro grupo.{{ endif }}</p>
+
+<div class="reparto">
+    {{ for fila in filas }}
+    <div class="fila-reparto">
+        <span class="etiqueta-reparto">{{ fila.etiqueta }}:</span>
+        {{ formfield fila.campo }}
+    </div>
+    {{ endfor }}
+</div>
+
+<p>Total repartido: <b><span id="suma">0</span> de {{ session.config.dotacion_espectador }}</b></p>
+
+<p>Recuerda que solo uno de los escenarios se usará para calcular tu pago.</p>
+
+{{ next_button }}
+
+<style>
+    .reparto { margin: 1rem 0; }
+    .fila-reparto { display: flex; align-items: center; gap: .8rem; margin-bottom: .6rem; flex-wrap: wrap; }
+    .etiqueta-reparto { min-width: 15rem; }
+    .fila-reparto ._formfield { margin-bottom: 0; }
+    .fila-reparto .col-form-label:empty { display: none; }
+    .fila-reparto input { max-width: 7rem; }
+</style>
+{{ endblock }}
+
+{{ block scripts }}
+<script>
+    // Total repartido en vivo: suma solo lo que sean números enteros.
+    const casillas = document.querySelectorAll('.reparto input');
+    const suma = document.getElementById('suma');
+
+    function actualizar() {
+        let total = 0;
+        casillas.forEach(function (c) {
+            const texto = c.value.trim();
+            if (/^[0-9]+$/.test(texto)) { total += parseInt(texto, 10); }
+        });
+        suma.textContent = total;
+    }
+    casillas.forEach(function (c) { c.addEventListener('input', actualizar); });
+    actualizar();
+</script>
+
+
+<script>const RANGOS = {{ rangos|json }};</script>
+{{ include "_templates/global/validar_numeros.html" }}
+{{ endblock }}

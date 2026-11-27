@@ -1,23 +1,37 @@
 {{ extends "global/Page.html" }}
-{{ block title }}¿Qué crees que hará {{ if es_propio }}tu propio grupo{{ else }}el grupo contrario{{ endif }}?{{ endblock }}
+{{ block title }}Escenario 4: Predicción sobre {{ if es_propio }}tu propio grupo{{ else }}el otro grupo{{ endif }}
+<span style="display:block; font-size:1rem; font-weight:400; color:#999; margin-top:.3rem;">({{ numero }} de 2)</span>{{ endblock }}
 {{ block content }}
+{{ include "intro/banner_grupo.html" }}
 
-<p>Imagina que, en el juego anterior, alguien le envía
-{{ session.config.nivel_referencia_creencias }} {{ session.config.etiqueta_moneda }}
-(ya multiplicadas por {{ session.config.multiplicador_confianza }}) a un participante de
-{{ if es_propio }}<b>tu propio grupo</b>{{ else }}<b>el grupo contrario</b>{{ endif }}
-en el rol de receptor. Es decir, esa persona recibe {{ recibido }}
-{{ session.config.etiqueta_moneda }}. ¿Cuánto crees que esa persona devolvería, en promedio?</p>
-
-{{ if session.config.incentivos != 'hipotetico' }}
-<p>Si tu predicción queda a {{ session.config.tolerancia_creencias }}
-{{ session.config.etiqueta_moneda }} o menos de la devolución promedio real de ese grupo
-en esta sesión, ganas {{ session.config.pago_creencias }} {{ session.config.etiqueta_moneda }}.</p>
+{{ if es_propio }}
+<p>Piensa en un participante de tu propio grupo que, en esta sesión, respondió como quien
+recibe cuando quien le envía es otra persona de tu propio grupo.</p>
+{{ else }}
+<p>Piensa en un participante del otro grupo que, en esta sesión, respondió como quien
+recibe cuando quien le envía es una persona de tu grupo.</p>
 {{ endif }}
 
-<p>Puedes responder desde 0 hasta {{ recibido }}.</p>
+<p>Imagina que quien envía le manda {{ session.config.nivel_referencia_creencias }}
+{{ session.config.etiqueta_moneda }}. Esa cantidad se multiplica por
+{{ session.config.multiplicador_confianza }}, así que quien recibe obtiene {{ recibido }}
+{{ session.config.etiqueta_moneda }} y decide cuántas devolver.</p>
+
+<p><b>¿Cuántas {{ session.config.etiqueta_moneda }} crees que devolvería, en promedio, un
+participante {{ if es_propio }}de tu propio grupo{{ else }}del otro grupo{{ endif }}?
+(de 0 a {{ recibido }})</b></p>
 
 {{ formfields }}
 
+<p>Si tu predicción difiere en {{ session.config.umbral_creencias }}
+{{ session.config.etiqueta_moneda }} o menos del promedio real de los participantes
+{{ if es_propio }}de tu propio grupo{{ else }}del otro grupo{{ endif }}, ganas
+{{ session.config.premio_creencias }} {{ session.config.etiqueta_moneda }}.</p>
+
 {{ next_button }}
+{{ endblock }}
+
+{{ block scripts }}
+<script>const RANGOS = {{ rangos|json }};</script>
+{{ include "_templates/global/validar_numeros.html" }}
 {{ endblock }}

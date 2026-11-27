@@ -1,0 +1,66 @@
+<script>
+    // Revisa los campos numéricos con los mensajes de la autora, en vez de los del navegador.
+    // Antes de incluir este archivo, cada pantalla define RANGOS, por ejemplo:
+    //   {"dict_propio_cedido": {"min": 0, "max": 100, "vacio": "Indica cuántas…"}}
+    // Si un campo trae "unico", ese mensaje reemplaza a todos los demás (por ejemplo, la edad).
+    (function () {
+        const form = document.getElementById('form');
+        form.noValidate = true;  // apaga los mensajes del navegador
+
+        // Las casillas pasan a ser de texto: así el navegador no borra ni bloquea lo escrito
+        Object.keys(RANGOS).forEach(function (campo) {
+            const casilla = form.querySelector('[name="' + campo + '"]');
+            if (!casilla) { return; }
+            casilla.type = 'text';
+            casilla.inputMode = 'numeric';
+            ['min', 'max', 'step', 'required'].forEach(function (a) { casilla.removeAttribute(a); });
+            casilla.addEventListener('input', function () { quitarError(casilla); });
+        });
+
+        function quitarError(casilla) {
+            const previo = casilla.parentNode.querySelector('.error-numero');
+            if (previo) { previo.remove(); }
+        }
+
+        function mensaje(texto, r) {
+            if (texto === '') { return r.vacio; }
+            if (!/^-?[0-9]+$/.test(texto)) {
+                return 'Ingresa un número entero, sin decimales, entre ' + r.min + ' y ' + r.max + '.';
+            }
+            const n = parseInt(texto, 10);
+            if (n < r.min || n > r.max) {
+                return 'El valor debe estar entre ' + r.min + ' y ' + r.max + '.';
+            }
+            return null;
+        }
+
+        // 'true' = se ejecuta antes que el bloqueo del botón que pone oTree
+        form.addEventListener('submit', function (evento) {
+            let primero = null;
+            Object.keys(RANGOS).forEach(function (campo) {
+                const casilla = form.querySelector('[name="' + campo + '"]');
+                if (!casilla) { return; }
+                quitarError(casilla);
+                const r = RANGOS[campo];
+                let error = mensaje(casilla.value.trim(), r);
+                if (error && r.unico) { error = r.unico; }
+                if (error) {
+                    const aviso = document.createElement('div');
+                    aviso.className = 'error-numero';
+                    aviso.textContent = error;
+                    casilla.insertAdjacentElement('afterend', aviso);
+                    if (!primero) { primero = casilla; }
+                }
+            });
+            if (primero) {
+                evento.preventDefault();
+                evento.stopImmediatePropagation();
+                primero.focus();
+            }
+        }, true);
+    })();
+</script>
+
+<style>
+    .error-numero { color: #dc3545; font-size: .9rem; margin-top: .25rem; }
+</style>

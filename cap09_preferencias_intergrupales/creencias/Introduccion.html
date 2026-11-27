@@ -1,0 +1,18 @@
+{{ extends "global/Page.html" }}
+{{ block title }}Escenario 4: Predicciones{{ endblock }}
+{{ block content }}
+{{ include "intro/banner_grupo.html" }}
+
+<p>En este escenario vas a predecir cuántas {{ session.config.etiqueta_moneda }} devolvieron,
+en promedio, las personas de esta sesión que respondieron como quien recibe en el escenario
+anterior. Harás una predicción para las personas de tu propio grupo y otra para las del
+otro grupo.</p>
+
+<p>Si este escenario es el elegido al final, ganas {{ session.config.premio_creencias }}
+{{ session.config.etiqueta_moneda }} por cada predicción que difiera en
+{{ session.config.umbral_creencias }} {{ session.config.etiqueta_moneda }} o menos del
+promedio real; si no, no ganas nada por esa predicción. Aquí no hay emparejamiento: el
+promedio real se calcula con las respuestas de todas las personas de esta sesión.</p>
+
+{{ next_button }}
+{{ endblock }}

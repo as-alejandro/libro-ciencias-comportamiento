@@ -9,28 +9,19 @@ afecta a tu calificación.</p>
 <p>La actividad dura unos 35 minutos. Tus respuestas se guardan con un código
 y no con tu nombre, y quien dirija la sesión no podrá saber quién respondió qué.</p>
 
-{{ if session.config.incentivos == 'dinero_real' }}
-    {{ if session.config.modo_pago == 'una_decision_propia' }}
-    <p>Al terminar se seleccionará al azar una de tus propias decisiones, y cobrarás
-    en dinero lo que hayas ganado en ella.</p>
-    {{ else }}
-    <p>Al terminar se seleccionará al azar a 1 de cada {{ session.config.prob_pago }}
-    participantes. A esa persona se le seleccionará al azar una de sus propias decisiones,
-    y cobrará en dinero lo que haya ganado en ella.</p>
-    {{ endif }}
-{{ endif }}
-
-{{ if session.config.incentivos == 'puntos' }}
-<p>Al terminar verás cuántos puntos has ganado, sin que se conviertan en dinero.</p>
-{{ endif }}
-
-{{ if session.config.incentivos == 'hipotetico' }}
-<p>Esta actividad no paga dinero ni puntos; es puramente ilustrativa.</p>
-{{ endif }}
+<p>Al terminar verás cuántas {{ session.config.etiqueta_moneda }} ganaste, sin que se
+conviertan en dinero.</p>
 
 <p>Puedes dejar la actividad en cualquier momento cerrando esta ventana.</p>
-
 {{ formfields }}
 
 {{ next_button }}
+
+<style>
+    /* Quita la etiqueta vacía que oTree pone encima de las opciones */
+    ._formfield .col-form-label:empty { display: none; }
+    /* Más espacio entre "No acepto participar" y el botón */
+    ._formfield { margin-bottom: 2rem; }
+</style>
+
 {{ endblock }}

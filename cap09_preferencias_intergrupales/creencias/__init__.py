@@ -1,11 +1,10 @@
 from otree.api import *
-from utilidades import iniciar_cronometro, segundos_transcurridos
-
+from utilidades import iniciar_cronometro, segundos_transcurridos, en_orden_aleatorio, error_entero, rango
 
 doc = """
 Capítulo 9. Preferencias intergrupales. App 5: creencias.
-Predicción incentivada de cuánto devuelve, en promedio, un miembro del propio grupo
-y uno del grupo contrario si recibe nivel_referencia_creencias ya multiplicado.
+Escenario 4: Predicciones. Introducción, control 4 (dos preguntas) y dos predicciones
+(propio grupo / otro grupo), en el orden de orden_grupo_creencias.
 """
 
 
@@ -24,14 +23,16 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    control4 = models.IntegerField(widget=widgets.RadioSelect, label='')
+    # La pregunta 1 lleva números de los parámetros, así que se escribe en la plantilla
+    control4_p1 = models.IntegerField(widget=widgets.RadioSelect, label='')
+    control4_p2 = models.IntegerField(
+        label='¿Qué tienes que predecir en las dos pantallas siguientes?',
+        widget=widgets.RadioSelect,
+    )
     control4_intentos = models.IntegerField(initial=0)
-    creencias_propio = models.IntegerField(
-        label='¿Cuánto crees que devolvería, en promedio?', min=0,
-    )
-    creencias_otro = models.IntegerField(
-        label='¿Cuánto crees que devolvería, en promedio?', min=0,
-    )
+    # La pregunta se escribe en la plantilla, porque cambia según el grupo
+    creencias_propio = models.IntegerField(label='', min=None, blank=True)
+    creencias_otro = models.IntegerField(label='', min=None, blank=True)
     creencias_propio_segundos = models.IntegerField(blank=True)
     creencias_otro_segundos = models.IntegerField(blank=True)
 
@@ -49,25 +50,39 @@ def recibido_referencia(player: Player):
     return config['nivel_referencia_creencias'] * config['multiplicador_confianza']
 
 
-def creencias_propio_max(player: Player):
-    return recibido_referencia(player)
+def limites_creencia(player: Player, campo):
+    return {campo: rango(0, recibido_referencia(player), 'Completa este campo.')}
 
 
-def creencias_otro_max(player: Player):
-    return recibido_referencia(player)
+def errores_creencia(player: Player, values, campo):
+    error = error_entero(values[campo], 0, recibido_referencia(player), 'Completa este campo.')
+    if error:
+        return {campo: error}
 
-
-def control4_choices(player: Player):
-    """Opciones del control 4. El valor de cada opción es el número que dice."""
+def control4_p1_choices(player: Player):
     config = player.session.config
     etiqueta = config['etiqueta_moneda']
     enviado = config['nivel_referencia_creencias']
     recibido = recibido_referencia(player)
     opciones = [[enviado, f'{enviado} {etiqueta}'], [recibido, f'{recibido} {etiqueta}']]
-    if recibido == enviado:  # con multiplicador 1 las dos opciones serían iguales
+    if recibido == enviado:
         opciones = opciones[:1]
     opciones.append([-1, 'Depende de lo que yo decida'])
-    return opciones
+    return en_orden_aleatorio(player, 'control4_p1', opciones)
+
+
+def control4_p2_choices(player: Player):
+    etiqueta = player.session.config['etiqueta_moneda']
+    return en_orden_aleatorio(player, 'control4_p2', [
+        [1, f'Cuántas {etiqueta} devolvieron, en promedio, las personas del grupo que se indique'],
+        [2, f'Cuántas {etiqueta} devolví yo'],
+        [3, f'Cuántas {etiqueta} enviaron las demás personas'],
+    ])
+
+
+def numero_de_pantalla(player: Player, grupo):
+    """1 si la predicción sobre 'grupo' es la primera para este participante; 2 si no."""
+    return 1 if pantalla_aqui(player, grupo, 'primero') else 2
 
 
 def pantalla_aqui(player: Player, grupo, posicion):
@@ -85,21 +100,35 @@ def pantalla_aqui(player: Player, grupo, posicion):
 
 # PÁGINAS
 
+class Introduccion(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return participa(player)
+
+
 class Control4(Page):
     form_model = 'player'
-    form_fields = ['control4']
+    form_fields = ['control4_p1', 'control4_p2']
 
     @staticmethod
     def is_displayed(player: Player):
         return participa(player)
 
     @staticmethod
+    def vars_for_template(player: Player):
+        return dict(recibido=recibido_referencia(player))
+
+    @staticmethod
     def error_message(player: Player, values):
         player.control4_intentos += 1
         if not player.session.config['exigir_controles']:
             return None
-        if values['control4'] != recibido_referencia(player):
-            return dict(control4='Esta respuesta no es correcta. Vuelve a intentarlo.')
+        correctas = dict(control4_p1=recibido_referencia(player), control4_p2=1)
+        errores = {}
+        for campo, correcta in correctas.items():
+            if values[campo] != correcta:
+                errores[campo] = 'Esta respuesta no es correcta. Vuelve a intentarlo.'
+        return errores
 
 
 class CreenciaPropio(Page):
@@ -110,8 +139,14 @@ class CreenciaPropio(Page):
     @staticmethod
     def vars_for_template(player: Player):
         iniciar_cronometro(player, 'creencias_propio')
-        return dict(es_propio=True, recibido=recibido_referencia(player))
+        return dict(es_propio=True, recibido=recibido_referencia(player),
+                    numero=numero_de_pantalla(player, 'propio'),
+                    rangos=limites_creencia(player, 'creencias_propio'))
 
+    @staticmethod
+    def error_message(player: Player, values):
+        return errores_creencia(player, values, 'creencias_propio')
+        
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.creencias_propio_segundos = segundos_transcurridos(player, 'creencias_propio')
@@ -125,8 +160,14 @@ class CreenciaOtro(Page):
     @staticmethod
     def vars_for_template(player: Player):
         iniciar_cronometro(player, 'creencias_otro')
-        return dict(es_propio=False, recibido=recibido_referencia(player))
+        return dict(es_propio=False, recibido=recibido_referencia(player),
+                    numero=numero_de_pantalla(player, 'otro'),
+                    rangos=limites_creencia(player, 'creencias_otro'))
 
+    @staticmethod
+    def error_message(player: Player, values):
+        return errores_creencia(player, values, 'creencias_otro')
+        
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.creencias_otro_segundos = segundos_transcurridos(player, 'creencias_otro')
@@ -157,6 +198,7 @@ class CreenciaOtroSegundo(CreenciaOtro):
 
 
 page_sequence = [
+    Introduccion,
     Control4,
     CreenciaPropioPrimero, CreenciaOtroPrimero,
     CreenciaPropioSegundo, CreenciaOtroSegundo,
